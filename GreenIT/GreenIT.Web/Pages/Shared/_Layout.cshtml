@@ -130,10 +130,12 @@
             </header>
 
             <main class="content-area" id="contentArea">
-                @RenderBody()
+                <div class="page-content">
+                    @RenderBody()
+                </div>
 
                 <footer class="app-footer">
-                    <span>© @DateTime.UtcNow.Year GreenIT</span>
+                    <span>Green IT Project By Nkambwe JM © @DateTime.UtcNow.Year  ISBAT University</span>
                     <span>Green Computing & Resource Efficiency</span>
                 </footer>
             </main>

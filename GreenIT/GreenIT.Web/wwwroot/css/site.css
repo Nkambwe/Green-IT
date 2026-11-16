@@ -302,22 +302,29 @@ body {
     height: calc(100dvh - var(--header-height));
     margin-top: var(--header-height);
     padding: 28px;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
 }
 
+.page-content {
+    flex: 1 0 auto;
+}
+
 .app-footer {
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    margin: 35px -28px -28px;
-    padding: 17px 28px;
+    margin: auto -28px -28px;
+    padding: 22px 28px;
     color: var(--text-muted);
     background: #FFFFFF;
     border-top: 1px solid var(--border-color);
     font-size: 11px;
+    flex-shrink: 0;
 }
 
 /* Desktop collapsed sidebar */

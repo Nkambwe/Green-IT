@@ -1,37 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Projects\\Labs\\GreenIT\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|c:\\projects\\labs\\greenit\\greenit.web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|solutionrelative:greenit.web\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 104,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Web\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "GreenIT.Web\\appsettings.Development.json",
-              "ToolTip": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Web\\appsettings.Development.json",
-              "RelativeToolTip": "GreenIT.Web\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-11-16T00:30:17.855Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

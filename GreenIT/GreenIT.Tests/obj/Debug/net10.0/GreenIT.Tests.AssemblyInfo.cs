@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenIT.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fa9033ff0eaf14f0df5b4865c3d34fe6f54fa7b")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenIT.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenIT.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

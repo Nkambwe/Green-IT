@@ -33,11 +33,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Application\\GreenIT.Application.csproj",
+      "projectUniqueName": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Application\\GreenIT.Application.csproj",
       "projectName": "GreenIT.Application",
-      "projectPath": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Application\\GreenIT.Application.csproj",
+      "projectPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Application\\GreenIT.Application.csproj",
       "packagesPath": "C:\\Users\\Macjohnan\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Application\\obj\\",
+      "outputPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -60,8 +60,8 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Projects\\Labs\\GreenIT\\GreenIT.Domain\\GreenIT.Domain.csproj": {
-              "projectPath": "C:\\Projects\\Labs\\GreenIT\\GreenIT.Domain\\GreenIT.Domain.csproj"
+            "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Domain\\GreenIT.Domain.csproj": {
+              "projectPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Domain\\GreenIT.Domain.csproj"
             }
           }
         }

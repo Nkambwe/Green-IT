@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a35d1a8edeb6bc503f5e0752bce12f219a210a8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2e0e1f89a188f0682bf549651ed065e01bb2a7d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

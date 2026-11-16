@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="GreenIT.Application/GreenIT.Application.csproj" />
+  <Project Path="GreenIT.Domain/GreenIT.Domain.csproj" />
+  <Project Path="GreenIT.Infrastructure/GreenIT.Infrastructure.csproj" />
+  <Project Path="GreenIT.Tests/GreenIT.Tests.csproj" />
+  <Project Path="GreenIT.Web/GreenIT.Web.csproj" Id="fa45d5fa-2e10-46ad-ac99-836c8549ca03" />
+</Solution>

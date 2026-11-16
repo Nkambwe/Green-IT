@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "GreenIT.Infrastructure/1.0.0": {
+        "runtime": {
+          "GreenIT.Infrastructure.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GreenIT.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

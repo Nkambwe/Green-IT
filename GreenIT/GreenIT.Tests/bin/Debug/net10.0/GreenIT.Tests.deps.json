@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "GreenIT.Tests/1.0.0": {
+        "dependencies": {
+          "GreenIT.Application": "1.0.0",
+          "GreenIT.Domain": "1.0.0"
+        },
+        "runtime": {
+          "GreenIT.Tests.dll": {}
+        }
+      },
+      "GreenIT.Application/1.0.0": {
+        "dependencies": {
+          "GreenIT.Domain": "1.0.0"
+        },
+        "runtime": {
+          "GreenIT.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "GreenIT.Domain/1.0.0": {
+        "runtime": {
+          "GreenIT.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GreenIT.Tests/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GreenIT.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GreenIT.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

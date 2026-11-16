@@ -1,10 +1,64 @@
 ﻿@page
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-4">
+    <h4 class="fw-bold mb-1">Dashboard</h4>
+    <p class="text-muted mb-0">
+        Welcome to GreenIT. Monitor organisational IT resources
+        and environmental performance from one place.
+    </p>
+</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm p-3">
+            <small class="text-muted">Registered IT Assets</small>
+            <h3 class="fw-bold mt-2 mb-1">0</h3>
+            <small class="text-muted">Awaiting asset records</small>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm p-3">
+            <small class="text-muted">Energy Audits</small>
+            <h3 class="fw-bold mt-2 mb-1">0</h3>
+            <small class="text-muted">No audits recorded</small>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm p-3">
+            <small class="text-muted">Printing Records</small>
+            <h3 class="fw-bold mt-2 mb-1">0</h3>
+            <small class="text-muted">No printing data recorded</small>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card border-0 shadow-sm p-3">
+            <small class="text-muted">Sustainability Actions</small>
+            <h3 class="fw-bold mt-2 mb-1">0</h3>
+            <small class="text-muted">No actions recorded</small>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm p-4">
+    <h5 class="fw-bold">Welcome to GreenIT</h5>
+    <p class="text-muted mb-3">
+        Your organisational resource-efficiency monitoring
+        platform is ready for configuration.
+    </p>
+
+    <div class="alert alert-success mb-0">
+        <strong>System foundation established.</strong>
+        Database and application identity infrastructure
+        have been configured successfully.
+    </div>
 </div>

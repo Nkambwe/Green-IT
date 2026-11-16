@@ -184,7 +184,6 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\rjsmcshtml.dswa.
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\bundle\GreenIT.Web.styles.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\projectbundle\GreenIT.Web.bundle.scp.css
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\b5gpojiejt-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\inav0k0fh7-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -344,3 +343,4 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\ru\Microsoft.Cod
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-hhcy266e8w-hhcy266e8w.gz

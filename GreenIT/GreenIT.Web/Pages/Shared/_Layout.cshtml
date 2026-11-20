@@ -1,4 +1,12 @@
-﻿
+﻿@{
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+
+    var isDashboard = currentPage.Equals(
+        "/Index", StringComparison.OrdinalIgnoreCase);
+
+    var isAssets = currentPage.StartsWith(
+        "/Assets", StringComparison.OrdinalIgnoreCase);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +45,7 @@
                 <div class="sidebar-section">
                     <span class="sidebar-label">MAIN MENU</span>
 
-                    <a asp-page="/Index" class="sidebar-link active"
+                    <a asp-page="/Index" class="sidebar-link @(isDashboard ? "active" : "")"
                        title="Dashboard">
                         <span class="menu-icon">▦</span>
                         <span class="menu-text">Dashboard</span>
@@ -47,12 +55,14 @@
                 <div class="sidebar-section">
                     <span class="sidebar-label">MANAGEMENT</span>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="IT Assets" title="IT Assets">
+                    <a asp-page="/Assets/Index"
+                       class="sidebar-link @(isAssets ? "active" : "")"
+                       title="IT Assets">
+
                         <span class="menu-icon">▣</span>
                         <span class="menu-text">IT Assets</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+
+                    </a>
 
                     <button type="button" class="sidebar-link module-link"
                             data-module="Energy Monitoring" title="Energy Monitoring">

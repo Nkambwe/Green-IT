@@ -8,57 +8,283 @@
 <div class="mb-4">
     <h4 class="fw-bold mb-1">Dashboard</h4>
     <p class="text-muted mb-0">
-        Welcome to GreenIT. Monitor organisational IT resources
-        and environmental performance from one place.
+        Welcome to Green IT. Monitor organisational IT resources and environmental performance from one place.
     </p>
 </div>
 
 <div class="row g-3 mb-4">
 
+    <!-- IT Assets -->
     <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
             <small class="text-muted">Registered IT Assets</small>
-            <h3 class="fw-bold mt-2 mb-1">0</h3>
-            <small class="text-muted">Awaiting asset records</small>
+            <h3 class="fw-bold mt-2 mb-1">
+                @Model.TotalAssets.ToString("N0")
+            </h3>
+            <small class="text-muted">
+                @Model.AssetsInUse.ToString("N0") currently in use
+            </small>
         </div>
     </div>
 
+    <!-- Energy Audits -->
     <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
             <small class="text-muted">Energy Audits</small>
-            <h3 class="fw-bold mt-2 mb-1">0</h3>
-            <small class="text-muted">No audits recorded</small>
+            <h3 class="fw-bold mt-2 mb-1">
+                @Model.TotalEnergyAudits.ToString("N0")
+            </h3>
+            <small class="text-muted">
+                Recorded energy assessments
+            </small>
         </div>
     </div>
 
+    <!-- Printing Records -->
     <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
             <small class="text-muted">Printing Records</small>
-            <h3 class="fw-bold mt-2 mb-1">0</h3>
-            <small class="text-muted">No printing data recorded</small>
+            <h3 class="fw-bold mt-2 mb-1">
+                @Model.TotalPrintingRecords.ToString("N0")
+            </h3>
+            <small class="text-muted">
+                Records in the last 12 months
+            </small>
         </div>
     </div>
 
+    <!-- Sustainability Actions -->
     <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
             <small class="text-muted">Sustainability Actions</small>
-            <h3 class="fw-bold mt-2 mb-1">0</h3>
-            <small class="text-muted">No actions recorded</small>
+            <h3 class="fw-bold mt-2 mb-1">
+                @Model.TotalSustainabilityActions.ToString("N0")
+            </h3>
+            <small class="text-muted">
+                @Model.CompletedActions completed
+            </small>
         </div>
     </div>
 
 </div>
 
+<!-- Operational Summary -->
+<div class="row g-3 mb-4">
+
+    <!-- Asset Status -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">IT Asset Status</h5>
+                <span class="text-muted small">
+                    @Model.TotalAssets assets
+                </span>
+            </div>
+
+            @if (Model.TotalAssets == 0) {
+                <p class="text-muted mb-0">No asset records available.</p>
+            } else {
+                @foreach (var item in Model.AssetStatusSummary) {
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="small">@item.Name</span>
+                            <span class="small fw-semibold">
+                                @item.Count (@item.Percentage%)
+                            </span>
+                        </div>
+
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: @(item.Percentage)%"
+                                 aria-valuenow="@item.Percentage"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Sustainability Progress -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+            <h5 class="fw-bold mb-3">Sustainability Progress</h5>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Completed actions</span>
+                <strong>@Model.CompletedActions</strong>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Open actions</span>
+                <strong>@Model.OpenActions</strong>
+            </div>
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Total actions</span>
+                <strong>@Model.TotalSustainabilityActions</strong>
+            </div>
+
+            <div class="progress my-3" style="height: 12px;">
+                <div class="progress-bar bg-success"
+                     role="progressbar"
+                     style="width: @(Model.ActionCompletionPercentage)%"
+                     aria-valuenow="@Model.ActionCompletionPercentage"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <span class="text-muted small">Completion rate</span>
+                <strong>@Model.ActionCompletionPercentage%</strong>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Energy Monitoring -->
+<div class="card border-0 shadow-sm p-4 mb-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0">Energy Efficiency Indicators</h5>
+        <span class="text-muted small">
+            @Model.TotalEnergyAuditItems observations
+        </span>
+    </div>
+
+    @if (Model.TotalEnergyAuditItems == 0) {
+        <p class="text-muted mb-0">
+            No energy audit observations available.
+        </p>
+    } else {
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <small class="text-muted">Sleep Mode Enabled</small>
+                <h4 class="fw-bold mt-1">
+                    @Model.SleepModePercentage%
+                </h4>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success"
+                         style="width: @(Model.SleepModePercentage)%">
+                    </div>
+                </div>
+                <small class="text-muted">
+                    @Model.SleepModeEnabled of @Model.TotalEnergyAuditItems
+                </small>
+            </div>
+
+            <div class="col-md-4">
+                <small class="text-muted">Automatic Shutdown</small>
+                <h4 class="fw-bold mt-1">
+                    @Model.AutomaticShutdownPercentage%
+                </h4>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success"
+                         style="width: @(Model.AutomaticShutdownPercentage)%">
+                    </div>
+                </div>
+                <small class="text-muted">
+                    @Model.AutomaticShutdownEnabled of @Model.TotalEnergyAuditItems
+                </small>
+            </div>
+
+            <div class="col-md-4">
+                <small class="text-muted">Monitor Power Saving</small>
+                <h4 class="fw-bold mt-1">
+                    @Model.MonitorPowerSavingPercentage%
+                </h4>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar bg-success"
+                         style="width: @(Model.MonitorPowerSavingPercentage)%">
+                    </div>
+                </div>
+                <small class="text-muted">
+                    @Model.MonitorPowerSavingEnabled of @Model.TotalEnergyAuditItems
+                </small>
+            </div>
+
+        </div>
+    }
+
+    <p class="text-muted small mt-3 mb-0">
+        These indicators represent observed power-management settings,
+        not measured electricity savings.
+    </p>
+</div>
+
+<!-- Printing Monitoring -->
+<div class="card border-0 shadow-sm p-4 mb-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0">Printing Overview</h5>
+        <span class="text-muted small">Last 12 months</span>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <small class="text-muted">Total Pages Printed</small>
+            <h4 class="fw-bold mt-1">
+                @Model.TotalPagesPrinted.ToString("N0")
+            </h4>
+        </div>
+
+        <div class="col-md-6">
+            <small class="text-muted">Duplex Printing</small>
+            <h4 class="fw-bold mt-1">
+                @Model.DuplexPercentage%
+            </h4>
+            <small class="text-muted">
+                @Model.TotalDuplexPages.ToString("N0") duplex pages
+            </small>
+        </div>
+    </div>
+
+    <h6 class="fw-semibold mb-3">Monthly Printing Activity</h6>
+
+    @if (Model.PrintingTrend.Count == 0) {
+        <p class="text-muted mb-0">
+            No printing records available for the selected period.
+        </p>
+    } else {
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Month</th>
+                        <th class="text-end">Total Pages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PrintingTrend) {
+                        <tr>
+                            <td>@item.Month</td>
+                            <td class="text-end fw-semibold">
+                                @item.TotalPages.ToString("N0")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<!-- System Information -->
 <div class="card border-0 shadow-sm p-4">
-    <h5 class="fw-bold">Welcome to GreenIT</h5>
+    <h5 class="fw-bold">Green IT Monitoring</h5>
+
     <p class="text-muted mb-3">
-        Your organisational resource-efficiency monitoring
-        platform is ready for configuration.
+        Monitor organisational IT resources, energy-efficiency practices, paper consumption and sustainability initiatives.
     </p>
 
     <div class="alert alert-success mb-0">
-        <strong>System foundation established.</strong>
-        Database and application identity infrastructure
-        have been configured successfully.
+        <strong>Dashboard connected.</strong>
+        Figures are retrieved from the Green IT database.
     </div>
 </div>

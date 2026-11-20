@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|c:\\projects\\labs\\green-it\\greenit\\greenit.web\\pages\\assets\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|solutionrelative:greenit.web\\pages\\assets\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Assets\\Details.cshtml",
+              "RelativeDocumentMoniker": "GreenIT.Web\\Pages\\Assets\\Details.cshtml",
+              "ToolTip": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Assets\\Details.cshtml",
+              "RelativeToolTip": "GreenIT.Web\\Pages\\Assets\\Details.cshtml",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-11-20T02:23:16.176Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

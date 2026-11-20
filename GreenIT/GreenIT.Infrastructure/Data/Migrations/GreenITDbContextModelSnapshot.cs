@@ -22,6 +22,158 @@ namespace GreenIT.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AssignedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AssignedToUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ITAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("ReturnedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ITAssetId", "ReturnedDate");
+
+                    b.ToTable("AssetAssignments", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetLifecycleEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("EventDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FromDepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ITAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RecordedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReferenceNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ToDepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventDate");
+
+                    b.HasIndex("FromDepartmentId");
+
+                    b.HasIndex("ITAssetId");
+
+                    b.HasIndex("ToDepartmentId");
+
+                    b.ToTable("AssetLifecycleEvents", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetMaintenance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("ITAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MaintenanceCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("MaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MaintenanceType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("NextMaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("PerformedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("ServiceProvider")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ITAssetId");
+
+                    b.HasIndex("MaintenanceDate");
+
+                    b.ToTable("AssetMaintenance", (string)null);
+                });
+
             modelBuilder.Entity("GreenIT.Domain.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -60,6 +212,290 @@ namespace GreenIT.Infrastructure.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Departments", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.EnergyAudit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AuditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AuditReference")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("AuditorUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuditDate");
+
+                    b.HasIndex("AuditReference")
+                        .IsUnique();
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("EnergyAudits", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.EnergyAuditItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int>("EnergyAuditId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ITAssetId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAutomaticShutdownEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMonitorPowerSavingEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSleepModeEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Observation")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnergyAuditId");
+
+                    b.HasIndex("ITAssetId");
+
+                    b.ToTable("EnergyAuditItems", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.ITAsset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AssetTag")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Manufacturer")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Model")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<decimal?>("PurchaseCost")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SerialNumber")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("WarrantyExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetTag")
+                        .IsUnique();
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("SerialNumber");
+
+                    b.ToTable("ITAssets", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.PrintingRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ColourPages")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DuplexPages")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("PrintJobs")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Source")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("TotalPages")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId", "Year", "Month")
+                        .IsUnique();
+
+                    b.ToTable("PrintingRecords", (string)null);
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.SustainabilityAction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AssignedToUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CompletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1500)
+                        .HasColumnType("nvarchar(1500)");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgressPercentage")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("TargetDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("TargetDate");
+
+                    b.ToTable("SustainabilityActions", (string)null);
                 });
 
             modelBuilder.Entity("GreenIT.Infrastructure.Identity.ApplicationUser", b =>
@@ -273,6 +709,118 @@ namespace GreenIT.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetAssignment", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", "Department")
+                        .WithMany("AssetAssignments")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GreenIT.Domain.Entities.ITAsset", "ITAsset")
+                        .WithMany("Assignments")
+                        .HasForeignKey("ITAssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("ITAsset");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetLifecycleEvent", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", null)
+                        .WithMany()
+                        .HasForeignKey("FromDepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GreenIT.Domain.Entities.ITAsset", "ITAsset")
+                        .WithMany("LifecycleEvents")
+                        .HasForeignKey("ITAssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GreenIT.Domain.Entities.Department", null)
+                        .WithMany()
+                        .HasForeignKey("ToDepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ITAsset");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.AssetMaintenance", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.ITAsset", "ITAsset")
+                        .WithMany("MaintenanceRecords")
+                        .HasForeignKey("ITAssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ITAsset");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.EnergyAudit", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", "Department")
+                        .WithMany("EnergyAudits")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.EnergyAuditItem", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.EnergyAudit", "EnergyAudit")
+                        .WithMany("Items")
+                        .HasForeignKey("EnergyAuditId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GreenIT.Domain.Entities.ITAsset", "ITAsset")
+                        .WithMany("EnergyAuditItems")
+                        .HasForeignKey("ITAssetId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("EnergyAudit");
+
+                    b.Navigation("ITAsset");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.ITAsset", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", "Department")
+                        .WithMany("ITAssets")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.PrintingRecord", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", "Department")
+                        .WithMany("PrintingRecords")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.SustainabilityAction", b =>
+                {
+                    b.HasOne("GreenIT.Domain.Entities.Department", "Department")
+                        .WithMany("SustainabilityActions")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("GreenIT.Infrastructure.Identity.ApplicationUser", b =>
                 {
                     b.HasOne("GreenIT.Domain.Entities.Department", "Department")
@@ -332,6 +880,35 @@ namespace GreenIT.Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.Department", b =>
+                {
+                    b.Navigation("AssetAssignments");
+
+                    b.Navigation("EnergyAudits");
+
+                    b.Navigation("ITAssets");
+
+                    b.Navigation("PrintingRecords");
+
+                    b.Navigation("SustainabilityActions");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.EnergyAudit", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("GreenIT.Domain.Entities.ITAsset", b =>
+                {
+                    b.Navigation("Assignments");
+
+                    b.Navigation("EnergyAuditItems");
+
+                    b.Navigation("LifecycleEvents");
+
+                    b.Navigation("MaintenanceRecords");
                 });
 #pragma warning restore 612, 618
         }

@@ -68,19 +68,19 @@ body {
 }
 
 .brand-icon {
-    width: 39px;
-    height: 39px;
-    min-width: 39px;
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
     display: grid;
     place-items: center;
-    color: #FFFFFF;
-    background: var(--green-primary);
-    border-radius: 11px;
+    color:#FFF;
+    background-color: var(--green-primary);
+    border-radius: 50%;
 }
 
     .brand-icon svg {
-        width: 25px;
-        height: 25px;
+        width: 35px;
+        height: 35px;
     }
 
 .brand-text strong,

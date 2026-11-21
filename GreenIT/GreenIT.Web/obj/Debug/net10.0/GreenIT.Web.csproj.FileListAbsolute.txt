@@ -268,8 +268,6 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\rjsmcshtml.dswa.
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\bundle\GreenIT.Web.styles.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\projectbundle\GreenIT.Web.bundle.scp.css
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-5tbh20vjoq-5tbh20vjoq.gz
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\b5gpojiejt-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\inav0k0fh7-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\kacsxazvhu-{0}-c2jlpeoesf-c2jlpeoesf.gz
@@ -344,3 +342,6 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\refint\GreenIT.W
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\GreenIT.Web.pdb
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\GreenIT.Web.genruntimeconfig.cache
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\ref\GreenIT.Web.dll
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-i65lcw0a9d-i65lcw0a9d.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\j91ujppncl-{0}-hhilavdapn-hhilavdapn.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-0wbqyyo48v-0wbqyyo48v.gz

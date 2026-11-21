@@ -47,6 +47,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzZXRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Assignments/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Assignments/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Assignments/Reassign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudHNcUmVhc3NpZ24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Assignments/Return.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudHNcUmV0dXJuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

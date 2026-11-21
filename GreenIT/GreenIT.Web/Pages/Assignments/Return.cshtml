@@ -1,0 +1,145 @@
+﻿@page
+@model GreenIT.Web.Pages.Assignments.ReturnModel
+
+@{
+    ViewData["Title"] = "Return Asset";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-1">Return Asset</h3>
+        <p class="text-muted mb-0">
+            Complete the return process and update the asset status.
+        </p>
+    </div>
+
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to Assignments
+    </a>
+</div>
+
+@if (Model.Assignment != null) {
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0">Assignment Details</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Asset Tag</small>
+                        <strong>@Model.Assignment.ITAsset.AssetTag</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Asset Name</small>
+                        <strong>@Model.Assignment.ITAsset.Name</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Department</small>
+                        <strong>@Model.Assignment.Department.Name</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Assigned To</small>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Assignment.AssignedToUserId)
+                                ? "Not specified"
+                                : Model.Assignment.AssignedToUserId)
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">Assignment Date</small>
+                        <strong>
+                            @Model.Assignment.AssignedDate.ToString("dd MMM yyyy")
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0">Return Information</h6>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden"
+                               asp-for="Input.AssignmentId" />
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.ReturnedDate"
+                                   class="form-label">
+                                Return Date
+                            </label>
+
+                            <input asp-for="Input.ReturnedDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Input.ReturnedDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.NewStatus"
+                                   class="form-label">
+                                New Asset Status
+                            </label>
+
+                            <select asp-for="Input.NewStatus"
+                                    asp-items="Model.StatusOptions"
+                                    class="form-select">
+                            </select>
+
+                            <span asp-validation-for="Input.NewStatus"
+                                  class="text-danger"></span>
+
+                            <small class="text-muted">
+                                Select the asset's condition in the inventory
+                                after it has been returned.
+                            </small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.Notes"
+                                   class="form-label">
+                                Return Notes
+                            </label>
+
+                            <textarea asp-for="Input.Notes"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Optional return observations..."></textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-page="./Index"
+                               class="btn btn-light">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Complete Return
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

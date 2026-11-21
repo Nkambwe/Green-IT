@@ -1,4 +1,3 @@
-
 using GreenIT.Domain.Entities;
 using GreenIT.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +14,8 @@ namespace GreenIT.Web.Pages.Assets {
 
         public ITAsset Asset { get; set; } = null!;
 
+        public List<AssetAssignment> AssignmentHistory { get; set; } = new();
+
         public async Task<IActionResult> OnGetAsync(int? id) {
             if (!id.HasValue)
                 return NotFound();
@@ -28,6 +29,14 @@ namespace GreenIT.Web.Pages.Assets {
                 return NotFound();
 
             Asset = asset;
+
+            AssignmentHistory = await _db.AssetAssignments
+                .AsNoTracking()
+                .Where(x => x.ITAssetId == id.Value)
+                .Include(x => x.Department)
+                .OrderByDescending(x => x.AssignedDate)
+                .ThenByDescending(x => x.Id)
+                .ToListAsync();
 
             return Page();
         }

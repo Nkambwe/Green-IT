@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|c:\\projects\\labs\\green-it\\greenit\\greenit.web\\pages\\assets\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|solutionrelative:greenit.web\\pages\\assets\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|c:\\projects\\labs\\green-it\\greenit\\greenit.web\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|solutionrelative:greenit.web\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|c:\\projects\\labs\\green-it\\greenit\\greenit.web\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FA45D5FA-2E10-46AD-AC99-836C8549CA03}|GreenIT.Web\\GreenIT.Web.csproj|solutionrelative:greenit.web\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Assets\\Details.cshtml",
-              "RelativeDocumentMoniker": "GreenIT.Web\\Pages\\Assets\\Details.cshtml",
-              "ToolTip": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Assets\\Details.cshtml",
-              "RelativeToolTip": "GreenIT.Web\\Pages\\Assets\\Details.cshtml",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADAAAAAMAAAAAAAAAA==",
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "GreenIT.Web\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "GreenIT.Web\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAEAAAAAAAAAAAAApwFIAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-11-21T03:58:46.01Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "GreenIT.Web\\Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Projects\\Labs\\Green-IT\\GreenIT\\GreenIT.Web\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "GreenIT.Web\\Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-11-20T02:23:16.176Z",
+              "WhenOpened": "2026-11-21T03:52:38.303Z",
               "EditorCaption": ""
             }
           ]

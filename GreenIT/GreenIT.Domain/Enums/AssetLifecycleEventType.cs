@@ -5,6 +5,7 @@
         Reassigned = 3,
         Maintained = 4,
         Retired = 5,
-        Disposed = 6
+        Disposed = 6,
+        Returned = 7
     }
 }

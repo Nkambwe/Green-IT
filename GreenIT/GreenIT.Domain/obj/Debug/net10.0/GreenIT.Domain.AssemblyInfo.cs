@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenIT.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b4ec3c05b955d125570d95bae8ded0775d25772")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48f83cc312e5eacb0cde54635b9e7ef9c4537491")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenIT.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenIT.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

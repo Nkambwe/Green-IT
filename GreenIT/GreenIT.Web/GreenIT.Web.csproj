@@ -18,4 +18,8 @@
     <ProjectReference Include="..\GreenIT.Infrastructure\GreenIT.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

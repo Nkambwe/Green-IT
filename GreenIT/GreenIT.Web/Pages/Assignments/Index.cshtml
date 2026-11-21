@@ -1,0 +1,184 @@
+﻿@page
+@model GreenIT.Web.Pages.Assignments.IndexModel
+
+@{
+    ViewData["Title"] = "Asset Assignments";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Asset Assignments</h4>
+        <p class="text-muted mb-0">
+            Manage asset allocation, returns and assignment history.
+        </p>
+    </div>
+
+    <a asp-page="./Create" class="btn btn-success">
+        <i class="bi bi-plus-circle me-1"></i>
+        New Assignment
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted small">Total Assignments</div>
+                <h3 class="fw-bold mb-0">
+                    @Model.Assignments.Count
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted small">Active Assignments</div>
+                <h3 class="fw-bold text-success mb-0">
+                    @Model.ActiveCount
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <div class="text-muted small">Returned Assets</div>
+                <h3 class="fw-bold text-secondary mb-0">
+                    @Model.ReturnedCount
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="fw-bold mb-0">Assignment Register</h5>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Department</th>
+                        <th>Assigned To</th>
+                        <th>Assigned Date</th>
+                        <th>Returned Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (!Model.Assignments.Any()) {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No asset assignments recorded.
+                            </td>
+                        </tr>
+                    } else {
+                        @foreach (var item in Model.Assignments) {
+                            <tr>
+                                <td>
+                                    <strong>@item.AssetTag</strong>
+                                    <div class="small text-muted">
+                                        @item.AssetName
+                                    </div>
+                                </td>
+
+                                <td>@item.Department</td>
+
+                                <td>
+                                    @(item.AssignedToUserId ?? "-")
+                                </td>
+
+                                <td>
+                                    @item.AssignedDate.ToString("dd MMM yyyy")
+                                </td>
+
+                                <td>
+                                    @(item.ReturnedDate?.ToString("dd MMM yyyy") ?? "-")
+                                </td>
+
+                                <td>
+                                    @if (item.ReturnedDate == null) {
+                                        <span class="badge bg-success">Active</span>
+                                    } else {
+                                        <span class="badge bg-secondary">Returned</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.ReturnedDate == null) {
+                                        <a asp-page="./Return" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-success">
+                                            Return
+                                        </a>
+                                        <a asp-page="./Reassign" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-arrow-left-right"></i>
+                                            Reassign
+                                        </a>
+                                    } 
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+            @if (Model.TotalPages > 1) {
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">
+                        Showing @(((Model.PageNumber - 1) * Model.PageSize) + 1)
+                        to @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalRecords))
+                        of @Model.TotalRecords assignments
+                    </small>
+
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-page="./Index"
+                                   asp-route-PageNumber="@(Model.PageNumber - 1)">
+                                    Previous
+                                </a>
+                            </li>
+
+                            @for (int i = 1; i <= Model.TotalPages; i++) {
+                                <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                    <a class="page-link"
+                                       asp-page="./Index"
+                                       asp-route-PageNumber="@i">
+                                        @i
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link"
+                                   asp-page="./Index"
+                                   asp-route-PageNumber="@(Model.PageNumber + 1)">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+        </div>
+    </div>
+</div>

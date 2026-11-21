@@ -1,0 +1,163 @@
+﻿@page
+@model GreenIT.Web.Pages.Assignments.ReassignModel
+
+@{
+    ViewData["Title"] = "Reassign Asset";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-1">Reassign Asset</h3>
+        <p class="text-muted mb-0">
+            Transfer an asset from its current assignment to another department or staff member.
+        </p>
+    </div>
+
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>
+        Back to Assignments
+    </a>
+</div>
+
+@if (Model.Assignment != null) {
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0">Current Assignment</h6>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Asset Tag</small>
+                        <strong>@Model.Assignment.ITAsset.AssetTag</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Asset Name</small>
+                        <strong>@Model.Assignment.ITAsset.Name</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Current Department</small>
+                        <strong>@Model.Assignment.Department.Name</strong>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Currently Assigned To</small>
+                        <strong>
+                            @(string.IsNullOrWhiteSpace(Model.Assignment.AssignedToUserId)
+                                ? "Not specified"
+                                : Model.Assignment.AssignedToUserId)
+                        </strong>
+                    </div>
+
+                    <div>
+                        <small class="text-muted d-block">Assignment Date</small>
+                        <strong>
+                            @Model.Assignment.AssignedDate.ToString("dd MMM yyyy")
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h6 class="mb-0">New Assignment Details</h6>
+                </div>
+
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden"
+                               asp-for="Input.AssignmentId" />
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.DepartmentId"
+                                   class="form-label">
+                                Destination Department
+                            </label>
+
+                            <select asp-for="Input.DepartmentId"
+                                    asp-items="Model.Departments"
+                                    class="form-select">
+                                <option value="">-- Select Department --</option>
+                            </select>
+
+                            <span asp-validation-for="Input.DepartmentId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.AssignedToUserId"
+                                   class="form-label">
+                                New Staff User ID
+                            </label>
+
+                            <input asp-for="Input.AssignedToUserId"
+                                   class="form-control"
+                                   placeholder="Enter staff user ID (optional)" />
+
+                            <small class="text-muted">
+                                Leave blank if the asset is assigned to a department
+                                without a specific staff member.
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Input.ReassignmentDate"
+                                   class="form-label">
+                                Reassignment Date
+                            </label>
+
+                            <input asp-for="Input.ReassignmentDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Input.ReassignmentDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Input.Notes"
+                                   class="form-label">
+                                Reassignment Notes
+                            </label>
+
+                            <textarea asp-for="Input.Notes"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Reason for reassignment or other observations..."></textarea>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-1"></i>
+                            The current assignment will be closed and a new
+                            assignment record will be created. The asset's
+                            department will also be updated.
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-page="./Index" class="btn btn-light">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-arrow-left-right me-1"></i>
+                                Complete Reassignment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,104 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Sustainability.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Sustainability Action";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">Delete Sustainability Action</h3>
+            <p class="text-muted mb-0">
+                Review the action before confirming deletion.
+            </p>
+        </div>
+
+        <a asp-page="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Register
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Are you sure you want to permanently delete this
+                sustainability action?
+            </div>
+
+            <h5 class="mb-3">@Model.Action.Title</h5>
+
+            <p class="text-muted">
+                @Model.Action.Description
+            </p>
+
+            <hr />
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Department</small>
+                    <strong>
+                        @(Model.Action.Department?.Name ?? "Organisation-wide")
+                    </strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Priority</small>
+                    <strong>@Model.Action.Priority</strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Status</small>
+                    <strong>@Model.Action.Status</strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Progress</small>
+                    <strong>@Model.Action.ProgressPercentage%</strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Start Date</small>
+                    <strong>
+                        @Model.Action.StartDate.ToString("dd MMM yyyy")
+                    </strong>
+                </div>
+
+                <div class="col-md-4">
+                    <small class="text-muted d-block">Target Date</small>
+                    <strong>
+                        @(Model.Action.TargetDate?.ToString("dd MMM yyyy")
+                          ?? "Not specified")
+                    </strong>
+                </div>
+
+            </div>
+
+            <form method="post">
+                <div class="d-flex justify-content-end gap-2">
+
+                    <a asp-page="Details"
+                       asp-route-id="@Model.Action.Id"
+                       class="btn btn-light border">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i>
+                        Confirm Delete
+                    </button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

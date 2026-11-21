@@ -34,7 +34,11 @@ if (app.Environment.IsDevelopment()) {
     Console.WriteLine($"Database: {connection.Database}");
     Console.WriteLine("============================================");
 
+    //..seed main data
     await GreenITSeeder.SeedAsync(scope.ServiceProvider);
+
+    //..seed users
+    await GreenITSeeder.SeedIdentityAsync(scope.ServiceProvider,app.Configuration);
 }
 
 // Configure the HTTP request pipeline.

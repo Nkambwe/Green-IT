@@ -116,14 +116,11 @@ var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreC
                         <span class="menu-text">Paper &amp; Printing</span>
                     </a>
 
-                    <a asp-page="/Sustainability/Index"
-                       class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
+                    <a asp-page="/Sustainability/Index" class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
                        title="Sustainability Actions">
-
                         <span class="menu-icon">
                             <i class="bi bi-leaf"></i>
                         </span>
-
                         <span class="menu-text">Sustainability Actions</span>
                     </a>
                 </div>
@@ -131,8 +128,8 @@ var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreC
                 <div class="sidebar-section">
                     <span class="sidebar-label">SYSTEM</span>
 
-                    <a asp-page="/Sustainability/Index"
-                       class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
+                    <a asp-page="/Reports/Index"
+                       class="sidebar-link @(IsMenuActive("/Reports") ? "active" : "")"
                        title="Reports">
 
                         <span class="menu-icon">

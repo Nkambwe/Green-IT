@@ -1,11 +1,152 @@
 ﻿using GreenIT.Domain.Entities;
 using GreenIT.Domain.Enums;
+using GreenIT.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace GreenIT.Infrastructure.Data.Seeding {
     public static class GreenITSeeder {
+
+
+        public static async Task SeedIdentityAsync(IServiceProvider services, IConfiguration configuration) {
+            var userManager =
+                services.GetRequiredService<UserManager<ApplicationUser>>();
+
+            var roleManager =
+                services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var db = services.GetRequiredService<GreenITDbContext>();
+
+            var logger = services.GetRequiredService<ILoggerFactory>()
+                .CreateLogger("GreenITIdentitySeeder");
+
+            // -------------------------------------------------
+            // 1. CREATE ROLES
+            // -------------------------------------------------
+
+            string[] roles = { "Administrator", "User" };
+
+            foreach (var roleName in roles) {
+                if (!await roleManager.RoleExistsAsync(roleName)) {
+                    var result = await roleManager.CreateAsync(new IdentityRole(roleName));
+
+                    if (!result.Succeeded) {
+                        throw new InvalidOperationException($"Could not create role {roleName}: " +
+                            string.Join("; ", result.Errors.Select(x => x.Description)));
+                    }
+
+                    logger.LogInformation("Created Identity role: {Role}", roleName);
+                }
+            }
+
+            // -------------------------------------------------
+            // 2. GET DEPARTMENTS
+            // -------------------------------------------------
+
+            var itDepartment = await db.Departments.SingleOrDefaultAsync(x => x.Code == "PBU-IT");
+            var operationsDepartment = await db.Departments.SingleOrDefaultAsync(x => x.Code == "PBU-OPS");
+            var financeDepartment = await db.Departments.SingleOrDefaultAsync(x => x.Code == "PBU-FIN");
+
+            if (itDepartment == null || operationsDepartment == null || financeDepartment == null) {
+                throw new InvalidOperationException("Required departments are missing. Run demonstration data seeding first.");
+            }
+
+            // -------------------------------------------------
+            // 3. DEFINE TEST USERS
+            // -------------------------------------------------
+
+            var testUsers = new[] {
+                new
+                {
+                    FullName = "Semanda Francis",
+                    UserName = "Francis",
+                    Email = "semanda@greenit.org",
+                    Role = "Administrator",
+                    DepartmentId = itDepartment.Id,
+                    PasswordKey = "SeedUsers:AdminPassword"
+                },
+                new
+                {
+                    FullName = "Philip Makwasi",
+                    UserName = "Philip",
+                    Email = "makwasi@greenit.org",
+                    Role = "User",
+                    DepartmentId = operationsDepartment.Id,
+                    PasswordKey = "SeedUsers:User1Password"
+                },
+                new
+                {
+                    FullName = "Jane Munnu",
+                    UserName = "Munnu",
+                    Email = "munnu@greenit.org",
+                    Role = "User",
+                    DepartmentId = financeDepartment.Id,
+                    PasswordKey = "SeedUsers:User2Password"
+                }
+            };
+
+            // -------------------------------------------------
+            // 4. CREATE USERS AND ASSIGN ROLES
+            // -------------------------------------------------
+
+            foreach (var item in testUsers) {
+                var user = await userManager.FindByNameAsync(
+                    item.UserName);
+
+                if (user == null) {
+                    var password = configuration[item.PasswordKey];
+
+                    if (string.IsNullOrWhiteSpace(password)) {
+                        throw new InvalidOperationException(
+                            $"Missing development password configuration: " +
+                            item.PasswordKey);
+                    }
+
+                    user = new ApplicationUser
+                    {
+                        FullName = item.FullName,
+                        UserName = item.UserName,
+                        Email = item.Email,
+                        DepartmentId = item.DepartmentId,
+                        IsActive = true
+                    };
+
+                    var createResult = await userManager.CreateAsync(
+                        user, password);
+
+                    if (!createResult.Succeeded) {
+                        throw new InvalidOperationException(
+                            $"Could not create user {item.UserName}: " +
+                            string.Join("; ", createResult.Errors.Select(
+                                x => x.Description)));
+                    }
+
+                    logger.LogInformation(
+                        "Created test user: {UserName}", item.UserName);
+                }
+
+                // Ensure the user has the required role.
+                if (!await userManager.IsInRoleAsync(user, item.Role)) {
+                    var roleResult = await userManager.AddToRoleAsync(
+                        user, item.Role);
+
+                    if (!roleResult.Succeeded) {
+                        throw new InvalidOperationException(
+                            $"Could not assign role {item.Role} to " +
+                            $"{item.UserName}: " +
+                            string.Join("; ", roleResult.Errors.Select(
+                                x => x.Description)));
+                    }
+                }
+            }
+
+            logger.LogInformation(
+                "GreenIT Identity test accounts verified successfully.");
+        }
+
         public static async Task SeedAsync(IServiceProvider services) {
             var db = services.GetRequiredService<GreenITDbContext>();
             var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger("GreenITSeeder");

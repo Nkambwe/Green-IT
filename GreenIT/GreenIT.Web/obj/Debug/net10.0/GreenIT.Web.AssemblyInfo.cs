@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("66939d05-7397-4b10-8535-4cf19254c8ea")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53c80d552e54ac7629f51ac43b7e2a4cb7e3b4ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a15097a89973dfd610a5152d76e899871de2cf4e")]
 [assembly: System.Reflection.AssemblyProductAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GreenIT.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

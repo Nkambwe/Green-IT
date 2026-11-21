@@ -1,0 +1,249 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Sustainability.DetailsModel
+
+@using GreenIT.Domain.Entities
+
+@{
+    ViewData["Title"] = "Sustainability Action Details";
+}
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h4 class="mb-1">Sustainability Action Details</h4>
+        <p class="text-muted mb-0">
+            View initiative information, ownership and progress.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-page="./Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-1"></i> Register
+        </a>
+
+        <a asp-page="./Edit"
+           asp-route-id="@Model.Action.Id"
+           class="btn btn-success">
+            <i class="bi bi-pencil-square me-1"></i> Edit
+        </a>
+
+        <a asp-page="./Delete"
+           asp-route-id="@Model.Action.Id"
+           class="btn btn-outline-danger">
+            <i class="bi bi-trash me-1"></i> Delete
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- Initiative heading -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <div class="text-muted small mb-2">
+                    SUSTAINABILITY INITIATIVE
+                </div>
+
+                <h4 class="mb-2">@Model.Action.Title</h4>
+
+                <div class="text-muted">
+                    @(Model.Action.Department?.Name ?? "Organisation-wide")
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                @switch (Model.Action.Priority) {
+                    case SustainabilityPriority.Critical:
+                        <span class="badge bg-danger">Critical Priority</span>
+                        break;
+                    case SustainabilityPriority.High:
+                        <span class="badge bg-warning text-dark">High Priority</span>
+                        break;
+                    case SustainabilityPriority.Medium:
+                        <span class="badge bg-info text-dark">Medium Priority</span>
+                        break;
+                    default:
+                        <span class="badge bg-secondary">Low Priority</span>
+                        break;
+                }
+
+                @switch (Model.Action.Status) {
+                    case SustainabilityActionStatus.Completed:
+                        <span class="badge bg-success">Completed</span>
+                        break;
+                    case SustainabilityActionStatus.InProgress:
+                        <span class="badge bg-primary">In Progress</span>
+                        break;
+                    case SustainabilityActionStatus.OnHold:
+                        <span class="badge bg-warning text-dark">On Hold</span>
+                        break;
+                    case SustainabilityActionStatus.Cancelled:
+                        <span class="badge bg-secondary">Cancelled</span>
+                        break;
+                    default:
+                        <span class="badge bg-light text-dark border">Not Started</span>
+                        break;
+                }
+
+                @if (Model.IsOverdue) {
+                    <span class="badge bg-danger">Overdue</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="mb-0">Initiative Progress</h6>
+            <h5 class="mb-0 text-success">
+                @Model.Action.ProgressPercentage%
+            </h5>
+        </div>
+
+        <div class="progress" style="height:12px">
+            <div class="progress-bar bg-success"
+                 role="progressbar"
+                 style="width:@(Model.Action.ProgressPercentage)%"
+                 aria-valuenow="@Model.Action.ProgressPercentage"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2">
+            <small class="text-muted">0%</small>
+            <small class="text-muted">100%</small>
+        </div>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h6 class="mb-0">Initiative Description</h6>
+    </div>
+
+    <div class="card-body">
+        <p class="mb-0" style="white-space:pre-line">@Model.Action.Description</p>
+    </div>
+</div>
+
+<!-- Ownership and timeline -->
+<div class="row g-3 mb-4">
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0">Ownership and Priority</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="text-muted small">Department</div>
+                    <div class="fw-semibold">
+                        @(Model.Action.Department?.Name ?? "Organisation-wide")
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-muted small">Assigned To</div>
+                    <div class="fw-semibold">
+                        @(Model.AssignedToName ?? "Unassigned")
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-muted small">Priority</div>
+                    <div class="fw-semibold">
+                        @Model.Action.Priority
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="mb-0">Timeline</h6>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="text-muted small">Start Date</div>
+                    <div class="fw-semibold">
+                        @Model.Action.StartDate.ToString("dd MMM yyyy")
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-muted small">Target Date</div>
+                    <div class="fw-semibold">
+                        @(Model.Action.TargetDate?.ToString("dd MMM yyyy") ?? "Not specified")
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-muted small">Completion Date</div>
+                    <div class="fw-semibold">
+                        @(Model.Action.CompletedDate?.ToString("dd MMM yyyy") ?? "Not completed")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Notes and audit information -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h6 class="mb-0">Additional Information</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="mb-4">
+            <div class="text-muted small mb-1">Notes</div>
+            <p class="mb-0" style="white-space:pre-line">
+                @(string.IsNullOrWhiteSpace(Model.Action.Notes)
+                    ? "No additional notes provided."
+                    : Model.Action.Notes)
+            </p>
+        </div>
+
+        <hr />
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="text-muted small">Created At (UTC)</div>
+                <div class="fw-semibold">
+                    @Model.Action.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Last Updated (UTC)</div>
+                <div class="fw-semibold">
+                    @(Model.Action.UpdatedAtUtc?.ToString("dd MMM yyyy HH:mm")
+                        ?? "Not updated")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end">
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to Register
+    </a>
+</div>

@@ -1,0 +1,159 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Printing.DetailsModel
+
+@{
+    ViewData["Title"] = "Printing Record Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to Register
+    </a>
+    <div>
+        <h4 class="mb-1">Printing Record Details</h4>
+        <p class="text-muted mb-0">
+            View the department's printing activity for the selected period.
+        </p>
+    </div>
+    <a asp-page="./Edit" asp-route-id="@Model.Record.Id" class="btn btn-success">
+        <i class="bi bi-pencil-square me-1"></i> Edit Record
+    </a>
+    <a asp-page="./Delete" asp-route-id="@Model.Record.Id" class="btn btn-outline-danger">
+        <i class="bi bi-trash me-1"></i> Delete
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div>
+                <div class="text-muted small mb-1">Department</div>
+                <h5 class="mb-1">@Model.Record.Department.Name</h5>
+                <div class="text-muted">
+                    @System.Globalization.CultureInfo.CurrentCulture
+                    .DateTimeFormat.GetMonthName(Model.Record.Month)
+                    @Model.Record.Year
+                </div>
+            </div>
+
+            <div>
+                @if (Model.Record.Source == "DEMO-SEED") {
+                    <span class="badge bg-info-subtle text-info">
+                        Demo Data
+                    </span>
+                } else {
+                    <span class="badge bg-success-subtle text-success">
+                        Manual / Recorded Data
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Total Pages</div>
+                <h3 class="mb-0 mt-2">
+                    @Model.Record.TotalPages.ToString("N0")
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Duplex Pages</div>
+                <h3 class="mb-0 mt-2">
+                    @Model.Record.DuplexPages.ToString("N0")
+                </h3>
+                <small class="text-muted">
+                    @Model.DuplexPercentage.ToString("N1")% of total pages
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Colour Pages</div>
+                <h3 class="mb-0 mt-2">
+                    @Model.Record.ColourPages.ToString("N0")
+                </h3>
+                <small class="text-muted">
+                    @Model.ColourPercentage.ToString("N1")% of total pages
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Print Jobs</div>
+                <h3 class="mb-0 mt-2">
+                    @Model.Record.PrintJobs.ToString("N0")
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+        <h6 class="mb-0">Record Information</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="text-muted small">Reporting Department</div>
+                <div class="fw-semibold">@Model.Record.Department.Name</div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Reporting Period</div>
+                <div class="fw-semibold">
+                    @System.Globalization.CultureInfo.CurrentCulture
+                    .DateTimeFormat.GetMonthName(Model.Record.Month)
+                    @Model.Record.Year
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Source</div>
+                <div class="fw-semibold">
+                    @(string.IsNullOrWhiteSpace(Model.Record.Source)
+                        ? "Not specified"
+                        : Model.Record.Source)
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Created At (UTC)</div>
+                <div class="fw-semibold">
+                    @Model.Record.CreatedAtUtc.ToString("dd MMM yyyy HH:mm")
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="text-muted small mb-1">Notes</div>
+                <div>
+                    @(string.IsNullOrWhiteSpace(Model.Record.Notes)
+                        ? "No notes provided."
+                        : Model.Record.Notes)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-end">
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Back to Register
+    </a>
+</div>

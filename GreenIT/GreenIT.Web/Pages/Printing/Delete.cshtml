@@ -1,0 +1,92 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Printing.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Printing Record";
+}
+
+<div class="mb-4">
+    <h4 class="mb-1">Delete Printing Record</h4>
+    <p class="text-muted mb-0">
+        Review the record before confirming deletion.
+    </p>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            Are you sure you want to delete this printing record?
+            This action cannot be undone.
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="text-muted small">Department</div>
+                <div class="fw-semibold">
+                    @Model.Record.Department.Name
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Reporting Period</div>
+                <div class="fw-semibold">
+                    @System.Globalization.CultureInfo.CurrentCulture
+                    .DateTimeFormat.GetMonthName(Model.Record.Month)
+                    @Model.Record.Year
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Total Pages</div>
+                <div class="fw-semibold">
+                    @Model.Record.TotalPages.ToString("N0")
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Print Jobs</div>
+                <div class="fw-semibold">
+                    @Model.Record.PrintJobs.ToString("N0")
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Duplex Pages</div>
+                <div class="fw-semibold">
+                    @Model.Record.DuplexPages.ToString("N0")
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Colour Pages</div>
+                <div class="fw-semibold">
+                    @Model.Record.ColourPages.ToString("N0")
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-muted small">Source</div>
+                <div class="fw-semibold">
+                    @(Model.Record.Source ?? "Not specified")
+                </div>
+            </div>
+        </div>
+
+        <form method="post">
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-page="./Details"
+                   asp-route-id="@Model.Record.Id"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash me-1"></i>
+                    Confirm Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

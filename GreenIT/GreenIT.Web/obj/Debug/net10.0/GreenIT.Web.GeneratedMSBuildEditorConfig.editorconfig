@@ -99,6 +99,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbnRlbmFuY2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Printing/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRpbmdcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Printing/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRpbmdcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Printing/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRpbmdcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Printing/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRpbmdcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Printing/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpbnRpbmdcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

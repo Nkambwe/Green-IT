@@ -1,0 +1,220 @@
+﻿@page
+@model GreenIT.Web.Pages.Printing.CreateModel
+
+@{
+    ViewData["Title"] = "Add Printing Record";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="fw-bold mb-1">Add Printing Record</h4>
+        <p class="text-muted mb-0">
+            Record monthly departmental printing activity.
+        </p>
+    </div>
+
+    <a asp-page="Index" class="btn btn-light border">
+        <i class="bi bi-arrow-left me-1"></i>
+        Back to Records
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0 fw-bold">
+            <i class="bi bi-printer text-success me-2"></i>
+            Printing Information
+        </h5>
+    </div>
+
+    <div class="card-body p-4">
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger"
+                 role="alert"></div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label asp-for="Input.DepartmentId"
+                           class="form-label fw-semibold">
+                        Department <span class="text-danger">*</span>
+                    </label>
+
+                    <select asp-for="Input.DepartmentId"
+                            asp-items="Model.Departments"
+                            class="form-select">
+                        <option value="">Select Department</option>
+                    </select>
+
+                    <span asp-validation-for="Input.DepartmentId"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Input.Year"
+                           class="form-label fw-semibold">
+                        Reporting Year <span class="text-danger">*</span>
+                    </label>
+
+                    <input asp-for="Input.Year"
+                           type="number"
+                           class="form-control"
+                           min="2000"
+                           max="@(DateTime.Today.Year + 1)" />
+
+                    <span asp-validation-for="Input.Year"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Input.Month"
+                           class="form-label fw-semibold">
+                        Reporting Month <span class="text-danger">*</span>
+                    </label>
+
+                    <select asp-for="Input.Month"
+                            asp-items="Model.Months"
+                            class="form-select">
+                        <option value="">Select Month</option>
+                    </select>
+
+                    <span asp-validation-for="Input.Month"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <hr class="my-2" />
+                    <h6 class="fw-bold text-success">
+                        Printing Statistics
+                    </h6>
+                    <p class="text-muted small">
+                        Enter the consolidated printing figures for the selected department and month.
+                    </p>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.TotalPages"
+                           class="form-label fw-semibold">
+                        Total Pages Printed <span class="text-danger">*</span>
+                    </label>
+
+                    <input asp-for="Input.TotalPages"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="e.g. 4500" />
+
+                    <span asp-validation-for="Input.TotalPages"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.PrintJobs"
+                           class="form-label fw-semibold">
+                        Number of Print Jobs
+                    </label>
+
+                    <input asp-for="Input.PrintJobs"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="e.g. 320" />
+
+                    <span asp-validation-for="Input.PrintJobs"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.DuplexPages"
+                           class="form-label fw-semibold">
+                        Duplex Pages
+                    </label>
+
+                    <input asp-for="Input.DuplexPages"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="e.g. 1800" />
+
+                    <span asp-validation-for="Input.DuplexPages"
+                          class="text-danger small"></span>
+
+                    <div class="form-text">
+                        Pages printed using double-sided printing.
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.ColourPages"
+                           class="form-label fw-semibold">
+                        Colour Pages
+                    </label>
+
+                    <input asp-for="Input.ColourPages"
+                           type="number"
+                           min="0"
+                           class="form-control"
+                           placeholder="e.g. 900" />
+
+                    <span asp-validation-for="Input.ColourPages"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <hr class="my-2" />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.Source"
+                           class="form-label fw-semibold">
+                        Data Source
+                    </label>
+
+                    <input asp-for="Input.Source"
+                           class="form-control"
+                           placeholder="e.g. Monthly Printer Report" />
+
+                    <span asp-validation-for="Input.Source"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Notes"
+                           class="form-label fw-semibold">
+                        Notes
+                    </label>
+
+                    <textarea asp-for="Input.Notes"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Additional observations or comments..."></textarea>
+
+                    <span asp-validation-for="Input.Notes"
+                          class="text-danger small"></span>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a asp-page="Index"
+                   class="btn btn-light border">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-lg me-1"></i>
+                    Save Printing Record
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

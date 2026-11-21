@@ -44,6 +44,16 @@ namespace GreenIT.Web.Pages {
         public decimal AutomaticShutdownPercentage { get; set; }
         public decimal MonitorPowerSavingPercentage { get; set; }
 
+        // Energy audit workflow
+        public int DraftEnergyAudits { get; set; }
+        public int CompletedEnergyAudits { get; set; }
+        public int ReviewedEnergyAudits { get; set; }
+
+        public int WorkstationsAudited { get; set; }
+
+        public List<DepartmentEnergySummary> DepartmentEnergySummaries { get; set; }
+            = new();
+
         // Sustainability indicators
         public int CompletedActions { get; set; }
         public int OpenActions { get; set; }
@@ -61,6 +71,15 @@ namespace GreenIT.Web.Pages {
             TotalEnergyAudits = await _db.EnergyAudits
                 .AsNoTracking()
                 .CountAsync();
+
+            DraftEnergyAudits = await _db.EnergyAudits
+                .CountAsync(x => x.Status == EnergyAuditStatus.Draft);
+
+            CompletedEnergyAudits = await _db.EnergyAudits
+                .CountAsync(x => x.Status == EnergyAuditStatus.Completed);
+
+            ReviewedEnergyAudits = await _db.EnergyAudits
+                .CountAsync(x => x.Status == EnergyAuditStatus.Reviewed);
 
             TotalSustainabilityActions = await _db.SustainabilityActions
                 .AsNoTracking()
@@ -179,39 +198,106 @@ namespace GreenIT.Web.Pages {
             // 4. ENERGY AUDIT INDICATORS
             // -----------------------------------------
 
-            var energyItems = await _db.EnergyAuditItems
+            // -----------------------------------------
+            // 4. ENERGY AUDIT INDICATORS
+            // Completed and Reviewed audits only
+            // -----------------------------------------
+
+            var energyItemsQuery = _db.EnergyAuditItems
                 .AsNoTracking()
-                .Select(x => new
+                .Where(x =>
+                    x.EnergyAudit.Status == EnergyAuditStatus.Completed ||
+                    x.EnergyAudit.Status == EnergyAuditStatus.Reviewed);
+
+            var energyTotals = await energyItemsQuery
+                .GroupBy(x => 1)
+                .Select(g => new
                 {
-                    x.IsSleepModeEnabled,
-                    x.IsAutomaticShutdownEnabled,
-                    x.IsMonitorPowerSavingEnabled
+                    Total = g.Count(),
+
+                    SleepEnabled = g.Sum(x =>
+                        x.IsSleepModeEnabled ? 1 : 0),
+
+                    ShutdownEnabled = g.Sum(x =>
+                        x.IsAutomaticShutdownEnabled ? 1 : 0),
+
+                    MonitorEnabled = g.Sum(x =>
+                        x.IsMonitorPowerSavingEnabled ? 1 : 0)
                 })
+                .FirstOrDefaultAsync();
+
+            TotalEnergyAuditItems = energyTotals?.Total ?? 0;
+
+            SleepModeEnabled = energyTotals?.SleepEnabled ?? 0;
+            AutomaticShutdownEnabled = energyTotals?.ShutdownEnabled ?? 0;
+            MonitorPowerSavingEnabled = energyTotals?.MonitorEnabled ?? 0;
+
+            SleepModePercentage = TotalEnergyAuditItems == 0
+                ? 0
+                : Math.Round(SleepModeEnabled * 100m / TotalEnergyAuditItems, 1);
+
+            AutomaticShutdownPercentage = TotalEnergyAuditItems == 0
+                ? 0
+                : Math.Round(AutomaticShutdownEnabled * 100m /
+                             TotalEnergyAuditItems, 1);
+
+            MonitorPowerSavingPercentage = TotalEnergyAuditItems == 0
+                ? 0
+                : Math.Round(MonitorPowerSavingEnabled * 100m /
+                             TotalEnergyAuditItems, 1);
+
+            // Unique workstations audited
+            WorkstationsAudited = await energyItemsQuery
+                .Where(x => x.ITAssetId.HasValue)
+                .Select(x => x.ITAssetId)
+                .Distinct()
+                .CountAsync();
+
+            // Department energy compliance
+            var departmentEnergyData = await energyItemsQuery
+                .GroupBy(x => new
+                {
+                    x.EnergyAudit.DepartmentId,
+                    DepartmentName = x.EnergyAudit.Department.Name
+                })
+                .Select(g => new
+                {
+                    g.Key.DepartmentId,
+                    g.Key.DepartmentName,
+
+                    Total = g.Count(),
+
+                    SleepEnabled = g.Sum(x =>
+                        x.IsSleepModeEnabled ? 1 : 0),
+
+                    ShutdownEnabled = g.Sum(x =>
+                        x.IsAutomaticShutdownEnabled ? 1 : 0),
+
+                    MonitorEnabled = g.Sum(x =>
+                        x.IsMonitorPowerSavingEnabled ? 1 : 0)
+                })
+                .OrderBy(x => x.DepartmentName)
                 .ToListAsync();
 
-            TotalEnergyAuditItems = energyItems.Count;
+            DepartmentEnergySummaries = departmentEnergyData
+                .Select(x => new DepartmentEnergySummary
+                {
+                    DepartmentName = x.DepartmentName,
+                    WorkstationObservations = x.Total,
 
-            SleepModeEnabled = energyItems
-                .Count(x => x.IsSleepModeEnabled);
+                    SleepModePercentage = x.Total == 0
+                        ? 0
+                        : Math.Round(x.SleepEnabled * 100m / x.Total, 1),
 
-            AutomaticShutdownEnabled = energyItems
-                .Count(x => x.IsAutomaticShutdownEnabled);
+                    AutomaticShutdownPercentage = x.Total == 0
+                        ? 0
+                        : Math.Round(x.ShutdownEnabled * 100m / x.Total, 1),
 
-            MonitorPowerSavingEnabled = energyItems
-                .Count(x => x.IsMonitorPowerSavingEnabled);
-
-            if (TotalEnergyAuditItems > 0) {
-                SleepModePercentage = Math.Round(
-                    SleepModeEnabled * 100m / TotalEnergyAuditItems, 1);
-
-                AutomaticShutdownPercentage = Math.Round(
-                    AutomaticShutdownEnabled * 100m /
-                    TotalEnergyAuditItems, 1);
-
-                MonitorPowerSavingPercentage = Math.Round(
-                    MonitorPowerSavingEnabled * 100m /
-                    TotalEnergyAuditItems, 1);
-            }
+                    MonitorPowerSavingPercentage = x.Total == 0
+                        ? 0
+                        : Math.Round(x.MonitorEnabled * 100m / x.Total, 1)
+                })
+                .ToList();
 
             // -----------------------------------------
             // 5. SUSTAINABILITY ACTIONS
@@ -245,6 +331,18 @@ namespace GreenIT.Web.Pages {
         public class PrintingMonthSummary {
             public string Month { get; set; } = string.Empty;
             public int TotalPages { get; set; }
+        }
+
+        public class DepartmentEnergySummary {
+            public string DepartmentName { get; set; } = string.Empty;
+
+            public int WorkstationObservations { get; set; }
+
+            public decimal SleepModePercentage { get; set; }
+
+            public decimal AutomaticShutdownPercentage { get; set; }
+
+            public decimal MonitorPowerSavingPercentage { get; set; }
         }
     }
 }

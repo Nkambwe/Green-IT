@@ -115,6 +115,7 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\GreenIT.Web.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\GreenIT.Web.pdb
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\Azure.Core.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\Azure.Identity.dll
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\BootstrapIcons.AspNetCore.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\Humanizer.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -268,7 +269,12 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\rjsmcshtml.dswa.
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\bundle\GreenIT.Web.styles.css
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\scopedcss\projectbundle\GreenIT.Web.bundle.scp.css
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-i65lcw0a9d-i65lcw0a9d.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\j91ujppncl-{0}-hhilavdapn-hhilavdapn.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\b5gpojiejt-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\2e1amhnlr3-{0}-sd3i8v2t49-sd3i8v2t49.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\i3bsqmtl5d-{0}-gnxria04pl-gnxria04pl.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\nubhuqea1k-{0}-nswed3g6lk-nswed3g6lk.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\inav0k0fh7-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\kacsxazvhu-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\v12gby09e2-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -313,6 +319,10 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\ye69h
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\4co1xgva9m-{0}-h1s4sie4z3-h1s4sie4z3.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\2074rzjzf1-{0}-63fj8s7r0e-63fj8s7r0e.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\ejjwtvwweq-{0}-0j3bgjxly4-0j3bgjxly4.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\ce7h3ubhk3-{0}-stlfv9b73z-stlfv9b73z.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\5r1omfurop-{0}-ngjlkjuqar-ngjlkjuqar.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\zfq63lwoqs-{0}-g2la5dlfnc-g2la5dlfnc.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\4out46526s-{0}-yaiiltkumf-yaiiltkumf.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\uf4wr5z0u4-{0}-47otxtyo56-47otxtyo56.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\jdhoaojifq-{0}-4v8eqarkd7-4v8eqarkd7.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\l295gjulo8-{0}-356vix0kms-356vix0kms.gz
@@ -342,7 +352,4 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\refint\GreenIT.W
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\GreenIT.Web.pdb
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\GreenIT.Web.genruntimeconfig.cache
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\ref\GreenIT.Web.dll
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-i65lcw0a9d-i65lcw0a9d.gz
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\j91ujppncl-{0}-hhilavdapn-hhilavdapn.gz
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-v53w8u8nm9-v53w8u8nm9.gz
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\BootstrapIcons.AspNetCore.dll
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-z6dscjw63t-z6dscjw63t.gz

@@ -151,9 +151,17 @@ body {
 .menu-icon {
     width: 20px;
     min-width: 20px;
-    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 17px;
+    line-height: 1;
 }
+
+    .menu-icon i {
+        display: inline-block;
+        line-height: 1;
+    }
 
 .menu-text {
     overflow: hidden;
@@ -295,15 +303,13 @@ body {
     font-size: 10px;
 }
 
-/* Only this area scrolls */
-
+/* Main scrolling content */
 .content-area {
     height: calc(100vh - var(--header-height));
     height: calc(100dvh - var(--header-height));
     margin-top: var(--header-height);
     padding: 28px;
-    display: flex;
-    flex-direction: column;
+    display: block;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -311,20 +317,28 @@ body {
 }
 
 .page-content {
-    flex: 1 0 auto;
+    display: block;
+    width: 100%;
+    min-width: 0;
 }
 
+/* Application footer */
+
 .app-footer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 12px;
-    margin: auto -28px -28px;
-    padding: 22px 28px;
+    margin-top: 24px;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 17px 0;
     color: var(--text-muted);
-    background: #FFFFFF;
+    background: transparent;
     border-top: 1px solid var(--border-color);
     font-size: 11px;
-    flex-shrink: 0;
 }
 
 /* Desktop collapsed sidebar */
@@ -446,8 +460,8 @@ body {
     }
 
     .app-footer {
-        margin: 30px -16px -20px;
-        padding: 16px;
+        margin-top: 20px;
+        padding: 16px 0;
         flex-wrap: wrap;
     }
 
@@ -455,7 +469,6 @@ body {
         display: none;
     }
 
-    /* Desktop collapsed state must not affect mobile */
     .sidebar-collapsed {
         --sidebar-width: 255px;
     }

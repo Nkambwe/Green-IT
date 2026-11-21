@@ -19,7 +19,7 @@ var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreC
     <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16.png" />
     <link rel="shortcut icon" href="~/favicon.ico" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -40,69 +40,120 @@ var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreC
                 </span>
             </a>
 
+            
             <nav class="sidebar-nav">
+
                 <div class="sidebar-section">
                     <span class="sidebar-label">MAIN MENU</span>
 
-                    <a asp-page="/Index" class="sidebar-link @(IsMenuActive("/Index") ? "active" : "")" title="Dashboard>
-                        <span class="menu-icon">▦</span>
+                    <a asp-page="/Index"
+                       class="sidebar-link @(IsMenuActive("/Index") ? "active" : "")"
+                       title="Dashboard">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-speedometer2"></i>
+                        </span>
+
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </div>
 
                 <div class="sidebar-section">
-
                     <span class="sidebar-label">MANAGEMENT</span>
 
-                    <a asp-page="/Assets/Index" class="sidebar-link @(IsMenuActive("/Assets") ? "active" : "")" title="IT Assets">
-                        <span class="menu-icon">▤</span>
+                    <a asp-page="/Assets/Index"
+                       class="sidebar-link @(IsMenuActive("/Assets") ? "active" : "")"
+                       title="IT Assets">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-pc-display"></i>
+                        </span>
+
                         <span class="menu-text">IT Assets</span>
                     </a>
 
-                    <a asp-page="/Assignments/Index" class="sidebar-link @(IsMenuActive("/Assignments") ? "active" : "")" title="Asset Assignments">
-                        <span class="menu-icon">⇄</span>
+                    <a asp-page="/Assignments/Index"
+                       class="sidebar-link @(IsMenuActive("/Assignments") ? "active" : "")"
+                       title="Asset Assignments">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-arrow-left-right"></i>
+                        </span>
+
                         <span class="menu-text">Asset Assignments</span>
                     </a>
 
-                    <a asp-page="/Maintenance/Index" class="sidebar-link @(IsMenuActive("/Maintenance") ? "active" : "")" title="Asset Maintenance">
-                        <span class="menu-icon">🔧</span>
+                    <a asp-page="/Maintenance/Index"
+                       class="sidebar-link @(IsMenuActive("/Maintenance") ? "active" : "")"
+                       title="Asset Maintenance">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-tools"></i>
+                        </span>
+
                         <span class="menu-text">Asset Maintenance</span>
                     </a>
 
-                    <a asp-page="/Monitoring/Index" class="sidebar-link @(IsMenuActive("/Monitoring") ? "active" : "")" title="Energy Monitoring">
-                        <span class="menu-icon">ϟ</span>
+                    <a asp-page="/Energy/Index"
+                       class="sidebar-link @(IsMenuActive("/Energy") ? "active" : "")"
+                       title="Energy Monitoring">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </span>
+
                         <span class="menu-text">Energy Monitoring</span>
                     </a>
 
-                    <a asp-page="/Printing/Index" class="sidebar-link @(IsMenuActive("/Printing") ? "active" : "")" title="Paper and Printing">
-                        <span class="menu-icon">▤</span>
-                        <span class="menu-text">Paper & Printing</span>
+                    <a asp-page="/Printing/Index"
+                       class="sidebar-link @(IsMenuActive("/Printing") ? "active" : "")"
+                       title="Paper and Printing">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-printer"></i>
+                        </span>
+
+                        <span class="menu-text">Paper &amp; Printing</span>
                     </a>
 
-                    <a asp-page="/Sustainability/Index" class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")" title="Sustainability Actions">
-                        <span class="menu-icon">❧</span>
+                    <a asp-page="/Sustainability/Index"
+                       class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
+                       title="Sustainability Actions">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-leaf"></i>
+                        </span>
+
                         <span class="menu-text">Sustainability Actions</span>
                     </a>
-
                 </div>
 
                 <div class="sidebar-section">
-
                     <span class="sidebar-label">SYSTEM</span>
 
-                    <a asp-page="/Sustainability/Index" class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
-                        title="Sustainability Actions">
-                        <span class="menu-icon">▧</span>
+                    <a asp-page="/Sustainability/Index"
+                       class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
+                       title="Reports">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-file-earmark-bar-graph"></i>
+                        </span>
+
                         <span class="menu-text">Reports</span>
                     </a>
 
-                    <a asp-page="/Administration/Index" class="sidebar-link @(IsMenuActive("/Administration") ? "active" : "")"
-                       title="Sustainability Actions">
-                        <span class="menu-icon">⚙</span>
+                    <a asp-page="/Administration/Index"
+                       class="sidebar-link @(IsMenuActive("/Administration") ? "active" : "")"
+                       title="Administration">
+
+                        <span class="menu-icon">
+                            <i class="bi bi-gear"></i>
+                        </span>
+
                         <span class="menu-text">Administration</span>
                     </a>
-
                 </div>
+
             </nav>
 
             <div class="sidebar-footer">
@@ -165,6 +216,7 @@ var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreC
     </div>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/chart.js/chart.min.js" asp-append-version="true"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

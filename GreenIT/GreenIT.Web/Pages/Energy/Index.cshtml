@@ -1,0 +1,191 @@
+﻿@page
+@model GreenIT.Web.Pages.Energy.IndexModel
+
+@{
+    ViewData["Title"] = "Energy Efficiency Monitoring";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="mb-1">Energy Efficiency Monitoring</h4>
+        <p class="text-muted mb-0">
+            Monitor workstation power-management practices through departmental audits.
+        </p>
+    </div>
+
+    <a asp-page="./Create" class="btn btn-success">
+        + New Energy Audit
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Total Audits</div>
+                <h3 class="mb-0">@Model.TotalRecords</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Draft Audits</div>
+                <h3 class="mb-0">@Model.DraftCount</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Completed Audits</div>
+                <h3 class="mb-0">@Model.CompletedCount</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="text-muted small">Reviewed Audits</div>
+                <h3 class="mb-0">@Model.ReviewedCount</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+
+        <form method="get" class="row g-2 mb-4">
+            <div class="col-md-5">
+                <input asp-for="SearchTerm"
+                       class="form-control"
+                       placeholder="Search reference, department or auditor..." />
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-success">
+                    Search
+                </button>
+
+                <a asp-page="./Index" class="btn btn-light">
+                    Clear
+                </a>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Audit Reference</th>
+                        <th>Department</th>
+                        <th>Audit Date</th>
+                        <th>Workstations</th>
+                        <th>Auditor</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Audits.Any()) {
+                        @foreach (var audit in Model.Audits) {
+                            <tr>
+                                <td class="fw-semibold">
+                                    @audit.AuditReference
+                                </td>
+
+                                <td>@audit.DepartmentName</td>
+
+                                <td>
+                                    @audit.AuditDate.ToString("dd MMM yyyy")
+                                </td>
+
+                                <td>@audit.WorkstationCount</td>
+
+                                <td>
+                                    @(audit.AuditorUserId ?? "Not specified")
+                                </td>
+
+                                <td>
+                                    @switch (audit.Status) {
+                                        case GreenIT.Domain.Enums.EnergyAuditStatus.Draft:
+                                            <span class="badge bg-secondary">Draft</span>
+                                            break;
+
+                                        case GreenIT.Domain.Enums.EnergyAuditStatus.Completed:
+                                            <span class="badge bg-info text-dark">Completed</span>
+                                            break;
+
+                                        case GreenIT.Domain.Enums.EnergyAuditStatus.Reviewed:
+                                            <span class="badge bg-success">Reviewed</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-page="./Details"
+                                       asp-route-id="@audit.Id"
+                                       class="btn btn-sm btn-outline-success">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    } else {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No energy audits found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1) {
+            <div class="d-flex justify-content-between align-items-center mt-3">
+
+                <small class="text-muted">
+                    Page @Model.PageNumber of @Model.TotalPages
+                    (@Model.TotalRecords records)
+                </small>
+
+                <div class="d-flex gap-2">
+                    @if (Model.PageNumber > 1) {
+                        <a asp-page="./Index"
+                           asp-route-pageNumber="@(Model.PageNumber - 1)"
+                           asp-route-searchTerm="@Model.SearchTerm"
+                           class="btn btn-sm btn-outline-secondary">
+                            Previous
+                        </a>
+                    }
+
+                    @if (Model.PageNumber < Model.TotalPages) {
+                        <a asp-page="./Index"
+                           asp-route-pageNumber="@(Model.PageNumber + 1)"
+                           asp-route-searchTerm="@Model.SearchTerm"
+                           class="btn btn-sm btn-outline-secondary">
+                            Next
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

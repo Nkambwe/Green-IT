@@ -63,6 +63,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzaWdubWVudHNcUmV0dXJuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Energy/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW5lcmd5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Energy/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW5lcmd5XERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Energy/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW5lcmd5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projects/Labs/Green-IT/GreenIT/GreenIT.Web/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

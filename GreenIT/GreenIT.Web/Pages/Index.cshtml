@@ -1,290 +1,1004 @@
 ﻿@page
 @model IndexModel
+@using System.Text.Json
 
 @{
     ViewData["Title"] = "Dashboard";
+
+    var assetLabels = Model.AssetStatusSummary
+        .Where(x => x.Count > 0)
+        .Select(x => x.Name)
+        .ToArray();
+
+    var assetValues = Model.AssetStatusSummary
+        .Where(x => x.Count > 0)
+        .Select(x => x.Count)
+        .ToArray();
+
+    var printingLabels = Model.PrintingTrend
+        .Select(x => x.Month)
+        .ToArray();
+
+    var printingValues = Model.PrintingTrend
+        .Select(x => x.TotalPages)
+        .ToArray();
+
+    var departmentLabels = Model.DepartmentEnergySummaries
+        .Select(x => x.DepartmentName)
+        .ToArray();
+
+    var sleepValues = Model.DepartmentEnergySummaries
+        .Select(x => x.SleepModePercentage)
+        .ToArray();
+
+    var shutdownValues = Model.DepartmentEnergySummaries
+        .Select(x => x.AutomaticShutdownPercentage)
+        .ToArray();
+
+    var monitorValues = Model.DepartmentEnergySummaries
+        .Select(x => x.MonitorPowerSavingPercentage)
+        .ToArray();
 }
 
-<div class="mb-4">
-    <h4 class="fw-bold mb-1">Dashboard</h4>
-    <p class="text-muted mb-0">
-        Welcome to Green IT. Monitor organisational IT resources and environmental performance from one place.
-    </p>
-</div>
+<style>
+    :root {
+        --green-primary: #176B45;
+        --green-dark: #105537;
+        --green-emerald: #239B63;
+        --green-medium: #59AD83;
+        --green-soft: #A9D6BD;
+        --green-pale: #E8F4ED;
+        --green-light: #F3F8F5;
+        --dashboard-bg: #F4F7F5;
+        --dashboard-border: #E5ECE7;
+        --dashboard-muted: #77857C;
+    }
 
-<div class="row g-3 mb-4">
+    .dashboard-page {
+        width: 100%;
+        min-width: 0;
+        color: #26352C;
+    }
 
-    <!-- IT Assets -->
-    <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3 h-100">
-            <small class="text-muted">Registered IT Assets</small>
-            <h3 class="fw-bold mt-2 mb-1">
-                @Model.TotalAssets.ToString("N0")
-            </h3>
-            <small class="text-muted">
-                @Model.AssetsInUse.ToString("N0") currently in use
-            </small>
-        </div>
+    .dashboard-heading {
+        margin-bottom: 24px;
+    }
+
+        .dashboard-heading h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-heading p {
+            color: var(--dashboard-muted);
+            font-size: 13px;
+            margin-bottom: 0;
+        }
+
+    /* Dashboard cards */
+
+    .dashboard-card {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        background: #fff;
+        border: 1px solid var(--dashboard-border);
+        border-radius: 12px;
+        box-shadow: 0 2px 7px rgba(20, 65, 42, 0.045);
+    }
+
+    .summary-card {
+        padding: 19px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .summary-card::after {
+            content: "";
+            position: absolute;
+            right: -18px;
+            top: -22px;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: var(--green-light);
+        }
+
+    .summary-label {
+        color: var(--dashboard-muted);
+        font-size: 12px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .summary-value {
+        color: var(--green-dark);
+        font-size: 27px;
+        font-weight: 750;
+        margin: 9px 0 4px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .summary-description {
+        color: var(--dashboard-muted);
+        font-size: 11px;
+    }
+
+    .dashboard-panel {
+        padding: 22px;
+    }
+
+    .panel-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+        .panel-heading h5 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+    .panel-subtitle {
+        color: var(--dashboard-muted);
+        font-size: 11px;
+    }
+
+    /* Chart sizing */
+
+    .chart-container {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+        height: 260px;
+    }
+
+        .chart-container.chart-small {
+            height: 190px;
+        }
+
+        .chart-container canvas {
+            display: block;
+            width: 100% !important;
+            max-width: 100%;
+        }
+
+    .chart-empty {
+        min-height: 180px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--dashboard-muted);
+        font-size: 13px;
+        text-align: center;
+        background: var(--green-light);
+        border-radius: 9px;
+        padding: 20px;
+    }
+
+    /* Energy indicators */
+
+    .energy-metric {
+        padding: 15px;
+        background: var(--green-light);
+        border: 1px solid #E0EEE5;
+        border-radius: 10px;
+        height: 100%;
+    }
+
+    .energy-metric-label {
+        color: var(--dashboard-muted);
+        font-size: 11px;
+    }
+
+    .energy-metric-value {
+        font-size: 25px;
+        font-weight: 750;
+        color: var(--green-dark);
+        margin: 7px 0;
+    }
+
+    .energy-metric-count {
+        color: var(--dashboard-muted);
+        font-size: 10px;
+        margin-top: 7px;
+    }
+
+    .dashboard-progress {
+        height: 7px;
+        border-radius: 20px;
+        background: #E8EEEA;
+        overflow: hidden;
+    }
+
+    .dashboard-progress-bar {
+        height: 100%;
+        border-radius: 20px;
+        background: var(--green-emerald);
+    }
+
+    /* Audit status */
+
+    .audit-status-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 0;
+        border-bottom: 1px solid #EDF1EE;
+        font-size: 12px;
+    }
+
+        .audit-status-item:last-child {
+            border-bottom: 0;
+        }
+
+    .status-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+
+    .status-draft {
+        background: #D5A64A;
+    }
+
+    .status-completed {
+        background: var(--green-emerald);
+    }
+
+    .status-reviewed {
+        background: var(--green-dark);
+    }
+
+    /* Dashboard information */
+
+    .dashboard-note {
+        background: var(--green-pale);
+        color: var(--green-dark);
+        border: 1px solid #D3E9DA;
+        border-radius: 8px;
+        padding: 13px 16px;
+        font-size: 11px;
+    }
+
+    .dashboard-section {
+        margin-bottom: 20px;
+    }
+
+    .dashboard-info-panel {
+        padding: 18px 22px;
+    }
+
+    /* Responsive */
+
+    @@media (max-width: 767px) {
+        .dashboard-heading {
+            margin-bottom: 18px;
+        }
+
+        .dashboard-panel {
+            padding: 16px;
+        }
+
+        .chart-container {
+            height: 230px;
+        }
+
+            .chart-container.chart-small {
+                height: 180px;
+            }
+
+        .summary-value {
+            font-size: 24px;
+        }
+
+        .energy-metric {
+            padding: 13px;
+        }
+
+        .dashboard-info-panel {
+            padding: 16px;
+        }
+    }
+</style>
+
+<div class="dashboard-page">
+
+    <!-- Heading -->
+    <div class="dashboard-heading">
+        <h4>Dashboard</h4>
+        <p>
+            Welcome to Green IT. Monitor organisational IT resources
+            and environmental performance from one place.
+        </p>
     </div>
 
-    <!-- Energy Audits -->
-    <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3 h-100">
-            <small class="text-muted">Energy Audits</small>
-            <h3 class="fw-bold mt-2 mb-1">
-                @Model.TotalEnergyAudits.ToString("N0")
-            </h3>
-            <small class="text-muted">
-                Recorded energy assessments
-            </small>
-        </div>
-    </div>
+    <!-- Summary cards -->
+    <div class="row g-3 dashboard-section">
 
-    <!-- Printing Records -->
-    <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3 h-100">
-            <small class="text-muted">Printing Records</small>
-            <h3 class="fw-bold mt-2 mb-1">
-                @Model.TotalPrintingRecords.ToString("N0")
-            </h3>
-            <small class="text-muted">
-                Records in the last 12 months
-            </small>
-        </div>
-    </div>
-
-    <!-- Sustainability Actions -->
-    <div class="col-xl-3 col-md-6">
-        <div class="card border-0 shadow-sm p-3 h-100">
-            <small class="text-muted">Sustainability Actions</small>
-            <h3 class="fw-bold mt-2 mb-1">
-                @Model.TotalSustainabilityActions.ToString("N0")
-            </h3>
-            <small class="text-muted">
-                @Model.CompletedActions completed
-            </small>
-        </div>
-    </div>
-
-</div>
-
-<!-- Operational Summary -->
-<div class="row g-3 mb-4">
-
-    <!-- Asset Status -->
-    <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0">IT Asset Status</h5>
-                <span class="text-muted small">
-                    @Model.TotalAssets assets
-                </span>
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card summary-card">
+                <div class="summary-label">Registered IT Assets</div>
+                <div class="summary-value">
+                    @Model.TotalAssets.ToString("N0")
+                </div>
+                <div class="summary-description">
+                    @Model.AssetsInUse.ToString("N0") currently in use
+                </div>
             </div>
+        </div>
 
-            @if (Model.TotalAssets == 0) {
-                <p class="text-muted mb-0">No asset records available.</p>
-            } else {
-                @foreach (var item in Model.AssetStatusSummary) {
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between mb-1">
-                            <span class="small">@item.Name</span>
-                            <span class="small fw-semibold">
-                                @item.Count (@item.Percentage%)
-                            </span>
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card summary-card">
+                <div class="summary-label">Workstations Audited</div>
+                <div class="summary-value">
+                    @Model.WorkstationsAudited.ToString("N0")
+                </div>
+                <div class="summary-description">
+                    Unique workstations in completed and reviewed audits
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card summary-card">
+                <div class="summary-label">Printing Records</div>
+                <div class="summary-value">
+                    @Model.TotalPrintingRecords.ToString("N0")
+                </div>
+                <div class="summary-description">
+                    Records in the last 12 months
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="dashboard-card summary-card">
+                <div class="summary-label">Sustainability Actions</div>
+                <div class="summary-value">
+                    @Model.TotalSustainabilityActions.ToString("N0")
+                </div>
+                <div class="summary-description">
+                    @Model.CompletedActions completed
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Asset status and sustainability -->
+    <div class="row g-3 dashboard-section">
+
+        <div class="col-lg-6">
+            <div class="dashboard-card dashboard-panel">
+                <div class="panel-heading">
+                    <h5>IT Asset Distribution</h5>
+                    <span class="panel-subtitle">
+                        @Model.TotalAssets assets
+                    </span>
+                </div>
+
+                @if (Model.TotalAssets == 0) {
+                    <div class="chart-empty">
+                        No asset records available.
+                    </div>
+                } else {
+                    <div class="chart-container">
+                        <canvas id="assetStatusChart"></canvas>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="dashboard-card dashboard-panel">
+                <div class="panel-heading">
+                    <h5>Sustainability Progress</h5>
+                    <span class="panel-subtitle">
+                        @Model.TotalSustainabilityActions actions
+                    </span>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="chart-container chart-small">
+                            <canvas id="sustainabilityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="audit-status-item">
+                            <span>Completed actions</span>
+                            <strong>@Model.CompletedActions</strong>
                         </div>
 
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar bg-success"
-                                 role="progressbar"
-                                 style="width: @(item.Percentage)%"
-                                 aria-valuenow="@item.Percentage"
-                                 aria-valuemin="0"
-                                 aria-valuemax="100">
+                        <div class="audit-status-item">
+                            <span>Open actions</span>
+                            <strong>@Model.OpenActions</strong>
+                        </div>
+
+                        <div class="audit-status-item">
+                            <span>Total actions</span>
+                            <strong>@Model.TotalSustainabilityActions</strong>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">Completion rate</small>
+                                <strong class="text-success">
+                                    @Model.ActionCompletionPercentage%
+                                </strong>
+                            </div>
+
+                            <div class="dashboard-progress">
+                                <div class="dashboard-progress-bar"
+                                     style="width: @(Model.ActionCompletionPercentage)%">
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Energy indicators -->
+    <div class="dashboard-card dashboard-panel dashboard-section">
+
+        <div class="panel-heading">
+            <div>
+                <h5>Energy Efficiency Monitoring</h5>
+                <div class="panel-subtitle mt-1">
+                    Observed power-management compliance
+                </div>
+            </div>
+
+            <span class="panel-subtitle">
+                @Model.TotalEnergyAuditItems observations
+            </span>
+        </div>
+
+        <div class="row g-3">
+
+            <div class="col-md-4">
+                <div class="energy-metric">
+                    <div class="energy-metric-label">Sleep Mode Compliance</div>
+                    <div class="energy-metric-value">
+                        @Model.SleepModePercentage%
+                    </div>
+
+                    <div class="dashboard-progress">
+                        <div class="dashboard-progress-bar"
+                             style="width: @(Model.SleepModePercentage)%">
+                        </div>
+                    </div>
+
+                    <div class="energy-metric-count">
+                        @Model.SleepModeEnabled of @Model.TotalEnergyAuditItems observations
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="energy-metric">
+                    <div class="energy-metric-label">Automatic Shutdown</div>
+                    <div class="energy-metric-value">
+                        @Model.AutomaticShutdownPercentage%
+                    </div>
+
+                    <div class="dashboard-progress">
+                        <div class="dashboard-progress-bar"
+                             style="width: @(Model.AutomaticShutdownPercentage)%">
+                        </div>
+                    </div>
+
+                    <div class="energy-metric-count">
+                        @Model.AutomaticShutdownEnabled of @Model.TotalEnergyAuditItems observations
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="energy-metric">
+                    <div class="energy-metric-label">Monitor Power Saving</div>
+                    <div class="energy-metric-value">
+                        @Model.MonitorPowerSavingPercentage%
+                    </div>
+
+                    <div class="dashboard-progress">
+                        <div class="dashboard-progress-bar"
+                             style="width: @(Model.MonitorPowerSavingPercentage)%">
+                        </div>
+                    </div>
+
+                    <div class="energy-metric-count">
+                        @Model.MonitorPowerSavingEnabled of @Model.TotalEnergyAuditItems observations
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="chart-container chart-standard mt-3">
+            <canvas id="energyComplianceChart"></canvas>
+        </div>
+
+        <div class="dashboard-note mt-3">
+            These indicators represent observed power-management settings
+            from Completed and Reviewed audits. They do not represent measured
+            electricity savings.
+        </div>
+
+    </div>
+
+    <!-- Printing trend and audit status -->
+    <div class="row g-3 dashboard-section">
+
+        <div class="col-lg-8">
+            <div class="dashboard-card dashboard-panel">
+                <div class="panel-heading">
+                    <h5>Monthly Printing Activity</h5>
+                    <span class="panel-subtitle">Last 12 months</span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <div class="summary-label">Total Pages Printed</div>
+                        <div class="summary-value">
+                            @Model.TotalPagesPrinted.ToString("N0")
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="summary-label">Duplex Printing</div>
+                        <div class="summary-value">
+                            @Model.DuplexPercentage%
+                        </div>
+                        <div class="summary-description">
+                            @Model.TotalDuplexPages.ToString("N0") duplex pages
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.PrintingTrend.Count == 0) {
+                    <div class="chart-empty">
+                        No printing records available for this period.
+                    </div>
+                } else {
+                    <div class="chart-container">
+                        <canvas id="printingTrendChart"></canvas>
+                    </div>
                 }
-            }
+            </div>
         </div>
-    </div>
 
-    <!-- Sustainability Progress -->
-    <div class="col-lg-6">
-        <div class="card border-0 shadow-sm p-4 h-100">
-            <h5 class="fw-bold mb-3">Sustainability Progress</h5>
+        <div class="col-lg-4">
+            <div class="dashboard-card dashboard-panel">
+                <div class="panel-heading">
+                    <h5>Energy Audit Status</h5>
+                    <span class="panel-subtitle">
+                        @Model.TotalEnergyAudits total
+                    </span>
+                </div>
 
-            <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Completed actions</span>
-                <strong>@Model.CompletedActions</strong>
-            </div>
+                <div class="chart-container chart-small">
+                    <canvas id="auditStatusChart"></canvas>
+                </div>
 
-            <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Open actions</span>
-                <strong>@Model.OpenActions</strong>
-            </div>
+                <div class="audit-status-item">
+                    <span><span class="status-dot status-draft"></span>Draft</span>
+                    <strong>@Model.DraftEnergyAudits</strong>
+                </div>
 
-            <div class="d-flex justify-content-between mb-2">
-                <span class="text-muted">Total actions</span>
-                <strong>@Model.TotalSustainabilityActions</strong>
-            </div>
+                <div class="audit-status-item">
+                    <span><span class="status-dot status-completed"></span>Completed</span>
+                    <strong>@Model.CompletedEnergyAudits</strong>
+                </div>
 
-            <div class="progress my-3" style="height: 12px;">
-                <div class="progress-bar bg-success"
-                     role="progressbar"
-                     style="width: @(Model.ActionCompletionPercentage)%"
-                     aria-valuenow="@Model.ActionCompletionPercentage"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
+                <div class="audit-status-item">
+                    <span><span class="status-dot status-reviewed"></span>Reviewed</span>
+                    <strong>@Model.ReviewedEnergyAudits</strong>
                 </div>
             </div>
-
-            <div class="d-flex justify-content-between">
-                <span class="text-muted small">Completion rate</span>
-                <strong>@Model.ActionCompletionPercentage%</strong>
-            </div>
         </div>
+
     </div>
 
-</div>
+    <!-- Department comparison -->
+    <div class="dashboard-card dashboard-panel dashboard-section">
 
-<!-- Energy Monitoring -->
-<div class="card border-0 shadow-sm p-4 mb-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold mb-0">Energy Efficiency Indicators</h5>
-        <span class="text-muted small">
-            @Model.TotalEnergyAuditItems observations
-        </span>
-    </div>
-
-    @if (Model.TotalEnergyAuditItems == 0) {
-        <p class="text-muted mb-0">
-            No energy audit observations available.
-        </p>
-    } else {
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <small class="text-muted">Sleep Mode Enabled</small>
-                <h4 class="fw-bold mt-1">
-                    @Model.SleepModePercentage%
-                </h4>
-                <div class="progress" style="height: 8px;">
-                    <div class="progress-bar bg-success"
-                         style="width: @(Model.SleepModePercentage)%">
-                    </div>
+        <div class="panel-heading">
+            <div>
+                <h5>Department Energy Comparison</h5>
+                <div class="panel-subtitle mt-1">
+                    Power-management compliance by department
                 </div>
-                <small class="text-muted">
-                    @Model.SleepModeEnabled of @Model.TotalEnergyAuditItems
-                </small>
             </div>
-
-            <div class="col-md-4">
-                <small class="text-muted">Automatic Shutdown</small>
-                <h4 class="fw-bold mt-1">
-                    @Model.AutomaticShutdownPercentage%
-                </h4>
-                <div class="progress" style="height: 8px;">
-                    <div class="progress-bar bg-success"
-                         style="width: @(Model.AutomaticShutdownPercentage)%">
-                    </div>
-                </div>
-                <small class="text-muted">
-                    @Model.AutomaticShutdownEnabled of @Model.TotalEnergyAuditItems
-                </small>
-            </div>
-
-            <div class="col-md-4">
-                <small class="text-muted">Monitor Power Saving</small>
-                <h4 class="fw-bold mt-1">
-                    @Model.MonitorPowerSavingPercentage%
-                </h4>
-                <div class="progress" style="height: 8px;">
-                    <div class="progress-bar bg-success"
-                         style="width: @(Model.MonitorPowerSavingPercentage)%">
-                    </div>
-                </div>
-                <small class="text-muted">
-                    @Model.MonitorPowerSavingEnabled of @Model.TotalEnergyAuditItems
-                </small>
-            </div>
-
-        </div>
-    }
-
-    <p class="text-muted small mt-3 mb-0">
-        These indicators represent observed power-management settings,
-        not measured electricity savings.
-    </p>
-</div>
-
-<!-- Printing Monitoring -->
-<div class="card border-0 shadow-sm p-4 mb-4">
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="fw-bold mb-0">Printing Overview</h5>
-        <span class="text-muted small">Last 12 months</span>
-    </div>
-
-    <div class="row g-3 mb-4">
-        <div class="col-md-6">
-            <small class="text-muted">Total Pages Printed</small>
-            <h4 class="fw-bold mt-1">
-                @Model.TotalPagesPrinted.ToString("N0")
-            </h4>
         </div>
 
-        <div class="col-md-6">
-            <small class="text-muted">Duplex Printing</small>
-            <h4 class="fw-bold mt-1">
-                @Model.DuplexPercentage%
-            </h4>
-            <small class="text-muted">
-                @Model.TotalDuplexPages.ToString("N0") duplex pages
-            </small>
-        </div>
-    </div>
+        @if (Model.DepartmentEnergySummaries.Count == 0) {
+            <div class="chart-empty">
+                No completed or reviewed department audit observations available.
+            </div>
+        } else {
+            <div class="chart-container chart-standard">
+                <canvas id="departmentEnergyChart"></canvas>
+            </div>
 
-    <h6 class="fw-semibold mb-3">Monthly Printing Activity</h6>
-
-    @if (Model.PrintingTrend.Count == 0) {
-        <p class="text-muted mb-0">
-            No printing records available for the selected period.
-        </p>
-    } else {
-        <div class="table-responsive">
-            <table class="table table-sm align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Month</th>
-                        <th class="text-end">Total Pages</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.PrintingTrend) {
+            <div class="table-responsive mt-3">
+                <table class="table table-sm align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td>@item.Month</td>
-                            <td class="text-end fw-semibold">
-                                @item.TotalPages.ToString("N0")
-                            </td>
+                            <th>Department</th>
+                            <th class="text-end">Observations</th>
+                            <th class="text-end">Sleep Mode</th>
+                            <th class="text-end">Auto Shutdown</th>
+                            <th class="text-end">Monitor Saving</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
-</div>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.DepartmentEnergySummaries) {
+                            <tr>
+                                <td>@item.DepartmentName</td>
+                                <td class="text-end">
+                                    @item.WorkstationObservations
+                                </td>
+                                <td class="text-end">@item.SleepModePercentage%</td>
+                                <td class="text-end">@item.AutomaticShutdownPercentage%</td>
+                                <td class="text-end">@item.MonitorPowerSavingPercentage%</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
 
-<!-- System Information -->
-<div class="card border-0 shadow-sm p-4">
-    <h5 class="fw-bold">Green IT Monitoring</h5>
-
-    <p class="text-muted mb-3">
-        Monitor organisational IT resources, energy-efficiency practices, paper consumption and sustainability initiatives.
-    </p>
-
-    <div class="alert alert-success mb-0">
-        <strong>Dashboard connected.</strong>
-        Figures are retrieved from the Green IT database.
     </div>
+
+    <!-- Dashboard information -->
+    <div class="dashboard-card dashboard-info-panel dashboard-section">
+        <h5 class="fw-bold mb-2">Green IT Monitoring</h5>
+
+        <p class="text-muted small mb-3">
+            Monitor organisational IT resources, energy-efficiency practices,
+            paper consumption and sustainability initiatives.
+        </p>
+
+        <div class="dashboard-note">
+            <strong>Dashboard connected.</strong>
+            Figures are retrieved from the Green IT database.
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Green IT theme palette
+            const green = {
+                dark: "#105537",
+                primary: "#176B45",
+                emerald: "#239B63",
+                medium: "#59AD83",
+                soft: "#A9D6BD",
+                pale: "#D8EBDD",
+                light: "#E8F4ED",
+                grey: "#DCE4DF",
+                text: "#77857C"
+            };
+
+            const gridColor = "#E9EFEB";
+
+            Chart.defaults.font.family =
+                "'Segoe UI', Arial, sans-serif";
+
+            Chart.defaults.color = green.text;
+
+            Chart.defaults.plugins.legend.labels.usePointStyle = true;
+
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: "bottom",
+                        labels: {
+                            padding: 18,
+                            boxWidth: 9,
+                            boxHeight: 9
+                        }
+                    }
+                }
+            };
+
+            // 1. IT Asset Distribution
+            const assetCanvas = document.getElementById("assetStatusChart");
+
+            if (assetCanvas) {
+                new Chart(assetCanvas, {
+                    type: "doughnut",
+                    data: {
+                        labels: @Html.Raw(JsonSerializer.Serialize(assetLabels)),
+                        datasets: [{
+                            data: @Html.Raw(JsonSerializer.Serialize(assetValues)),
+                            backgroundColor: [
+                                green.primary,
+                                green.emerald,
+                                green.medium,
+                                green.soft,
+                                green.grey,
+                                green.pale
+                            ],
+                            borderWidth: 2,
+                            borderColor: "#FFFFFF",
+                            hoverOffset: 7
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        cutout: "68%",
+                        plugins: {
+                            ...commonOptions.plugins,
+                            legend: {
+                                position: "bottom"
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. Sustainability Actions
+            const sustainabilityCanvas =
+                document.getElementById("sustainabilityChart");
+
+            if (sustainabilityCanvas) {
+                new Chart(sustainabilityCanvas, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Completed", "Open", "Cancelled"],
+                        datasets: [{
+                            data: [
+                                        @Model.CompletedActions,
+                                        @Model.OpenActions,
+                                Math.max(
+                                    0,
+                                            @Model.TotalSustainabilityActions -
+                                            @Model.CompletedActions -
+                                            @Model.OpenActions
+                                        )
+                            ],
+                            backgroundColor: [
+                                green.primary,
+                                green.soft,
+                                green.grey
+                            ],
+                            borderWidth: 2,
+                            borderColor: "#FFFFFF"
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        cutout: "75%",
+                        plugins: {
+                            ...commonOptions.plugins,
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 3. Energy Compliance
+            const energyCanvas =
+                document.getElementById("energyComplianceChart");
+
+            if (energyCanvas) {
+                new Chart(energyCanvas, {
+                    type: "bar",
+                    data: {
+                        labels: [
+                            "Sleep Mode",
+                            "Automatic Shutdown",
+                            "Monitor Power Saving"
+                        ],
+                        datasets: [{
+                            label: "Compliance",
+                            data: [
+                                        @Model.SleepModePercentage,
+                                        @Model.AutomaticShutdownPercentage,
+                                @Model.MonitorPowerSavingPercentage
+                            ],
+                            backgroundColor: [
+                                green.primary,
+                                green.emerald,
+                                green.medium
+                            ],
+                            borderRadius: 6,
+                            maxBarThickness: 48
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        indexAxis: "y",
+                        plugins: {
+                            ...commonOptions.plugins,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: gridColor
+                                },
+                                ticks: {
+                                    callback: value => value + "%"
+                                }
+                            },
+                            y: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 4. Printing Trend
+            const printingCanvas =
+                document.getElementById("printingTrendChart");
+
+            if (printingCanvas) {
+                new Chart(printingCanvas, {
+                    type: "line",
+                    data: {
+                        labels: @Html.Raw(JsonSerializer.Serialize(printingLabels)),
+                        datasets: [{
+                            label: "Pages Printed",
+                            data: @Html.Raw(JsonSerializer.Serialize(printingValues)),
+                            borderColor: green.primary,
+                            backgroundColor: "rgba(35, 155, 99, 0.12)",
+                            borderWidth: 2.5,
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 3,
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: green.emerald
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        plugins: {
+                            ...commonOptions.plugins,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: gridColor
+                                },
+                                ticks: {
+                                    callback: value =>
+                                        Number(value).toLocaleString()
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 5. Energy Audit Status
+            const auditCanvas =
+                document.getElementById("auditStatusChart");
+
+            if (auditCanvas) {
+                new Chart(auditCanvas, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Draft", "Completed", "Reviewed"],
+                        datasets: [{
+                            data: [
+                                        @Model.DraftEnergyAudits,
+                                        @Model.CompletedEnergyAudits,
+                                @Model.ReviewedEnergyAudits
+                            ],
+                            backgroundColor: [
+                                "#D5A64A",
+                                green.emerald,
+                                green.dark
+                            ],
+                            borderWidth: 2,
+                            borderColor: "#FFFFFF"
+                        }]
+                    },
+                    options: {
+                        ...commonOptions,
+                        cutout: "68%",
+                        plugins: {
+                            ...commonOptions.plugins,
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 6. Department Comparison
+            const departmentCanvas =
+                document.getElementById("departmentEnergyChart");
+
+            if (departmentCanvas) {
+                new Chart(departmentCanvas, {
+                    type: "bar",
+                    data: {
+                        labels: @Html.Raw(JsonSerializer.Serialize(departmentLabels)),
+                        datasets: [
+                            {
+                                label: "Sleep Mode",
+                                data: @Html.Raw(JsonSerializer.Serialize(sleepValues)),
+                                backgroundColor: green.primary,
+                                borderRadius: 4
+                            },
+                            {
+                                label: "Automatic Shutdown",
+                                data: @Html.Raw(JsonSerializer.Serialize(shutdownValues)),
+                                backgroundColor: green.emerald,
+                                borderRadius: 4
+                            },
+                            {
+                                label: "Monitor Power Saving",
+                                data: @Html.Raw(JsonSerializer.Serialize(monitorValues)),
+                                backgroundColor: green.soft,
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        ...commonOptions,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                grid: {
+                                    color: gridColor
+                                },
+                                ticks: {
+                                    callback: value => value + "%"
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+}

@@ -1,0 +1,246 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Energy.DetailsModel
+
+@{
+    ViewData["Title"] = "Energy Audit Details";
+}
+
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Energy Audit Details</h2>
+        <p class="text-muted mb-0">
+            Review audit information and record workstation observations.
+        </p>
+    </div>
+
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        Back to Audits
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null) {
+    <div class="alert alert-danger alert-dismissible fade show">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <small class="text-muted">Audit Reference</small>
+                <h5 class="mb-0">@Model.Audit.AuditReference</h5>
+            </div>
+
+            <div class="col-md-3">
+                <small class="text-muted">Department</small>
+                <h5 class="mb-0">@Model.Audit.Department.Name</h5>
+            </div>
+
+            <div class="col-md-2">
+                <small class="text-muted">Audit Date</small>
+                <h5 class="mb-0">@Model.Audit.AuditDate.ToString("dd MMM yyyy")</h5>
+            </div>
+
+            <div class="col-md-2">
+                <small class="text-muted">Auditor / Staff ID</small>
+                <h5 class="mb-0">@(Model.Audit.AuditorUserId ?? "Not specified")</h5>
+            </div>
+
+            <div class="col-md-2">
+                <small class="text-muted">Status</small>
+                <div>
+                    @if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Draft) {
+                        <span class="badge bg-warning text-dark">Draft</span>
+                    } else if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Completed) {
+                        <span class="badge bg-success">Completed</span>
+                    } else {
+                        <span class="badge bg-primary">Reviewed</span>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Audit.Notes)) {
+            <hr />
+            <small class="text-muted">Audit Notes</small>
+            <p class="mb-0">@Model.Audit.Notes</p>
+        }
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h4 class="mb-1">Workstation Checklist</h4>
+        <p class="text-muted mb-0">
+            Record the observed power-management settings for each workstation.
+        </p>
+    </div>
+
+    <span class="badge bg-light text-dark border">
+        @Model.Workstations.Count workstation(s)
+    </span>
+</div>
+
+@if (Model.Workstations.Count == 0) {
+    <div class="alert alert-info">
+        No active laptops or desktops are currently registered under
+        <strong>@Model.Audit.Department.Name</strong>.
+        Register or assign the relevant workstations before conducting this audit.
+    </div>
+} else {
+    <form method="post" asp-page-handler="SaveObservations">
+        <input type="hidden" asp-for="Input.AuditId" />
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Sleep Mode</th>
+                                <th>Automatic Shutdown</th>
+                                <th>Monitor Power Saving</th>
+                                <th>Observation</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < Model.Input.Items.Count; i++) {
+                                var workstation = Model.Workstations[i];
+
+                                <tr>
+                                    <td style="min-width:180px">
+                                        <input type="hidden"
+                                               asp-for="Input.Items[i].ITAssetId" />
+
+                                        <strong>@workstation.AssetTag</strong>
+                                        <div class="small text-muted">
+                                            @workstation.AssetName
+                                        </div>
+                                        <div class="small text-muted">
+                                            @workstation.Category
+                                            @if (!string.IsNullOrWhiteSpace(workstation.Location)) {
+                                                <span> · @workstation.Location</span>
+                                            }
+                                        </div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <input asp-for="Input.Items[i].IsSleepModeEnabled"
+                                               class="form-check-input"
+                                               type="checkbox" />
+                                    </td>
+
+                                    <td class="text-center">
+                                        <input asp-for="Input.Items[i].IsAutomaticShutdownEnabled"
+                                               class="form-check-input"
+                                               type="checkbox" />
+                                    </td>
+
+                                    <td class="text-center">
+                                        <input asp-for="Input.Items[i].IsMonitorPowerSavingEnabled"
+                                               class="form-check-input"
+                                               type="checkbox" />
+                                    </td>
+
+                                    <td style="min-width:220px">
+                                        <input asp-for="Input.Items[i].Observation"
+                                               class="form-control form-control-sm"
+                                               placeholder="Optional observation" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-end mt-3">
+                    @if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Draft) {
+                        <button type="submit" class="btn btn-success">
+                            Save Observations
+                        </button>
+                    } else {
+                        <span class="text-muted">
+                            This audit is no longer editable.
+                        </span>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </form>
+}
+
+<div class="card border-0 shadow-sm mt-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div>
+                <h5 class="mb-1">Audit Workflow</h5>
+
+                @if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Draft) {
+                    <p class="text-muted mb-0">
+                        Save your workstation observations, then complete the audit.
+                    </p>
+                } else if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Completed) {
+                    <p class="text-muted mb-0">
+                        This audit is complete and awaiting review.
+                    </p>
+                } else {
+                    <p class="text-success mb-0">
+                        This audit has been reviewed.
+                    </p>
+                }
+            </div>
+
+            <div>
+                @if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Draft) {
+                    <form method="post"
+                          asp-page-handler="Complete"
+                          asp-route-id="@Model.Audit.Id"
+                          onsubmit="return confirm('Are you sure you want to complete this audit? You will no longer be able to edit its observations.');">
+
+                        <button type="submit" class="btn btn-success">
+                            Complete Audit
+                        </button>
+                    </form>
+                } else if (Model.Audit.Status == GreenIT.Domain.Enums.EnergyAuditStatus.Completed) {
+                    <form method="post"
+                          asp-page-handler="Review"
+                          asp-route-id="@Model.Audit.Id"
+                          onsubmit="return confirm('Confirm that you have reviewed this audit?');">
+
+                        <button type="submit" class="btn btn-primary">
+                            Mark as Reviewed
+                        </button>
+                    </form>
+                } else {
+                    <span class="badge bg-success p-2">
+                        Review Completed
+                    </span>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="mt-4">
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        Back to Audit Register
+    </a>
+</div>

@@ -1,0 +1,120 @@
+﻿@page
+@model GreenIT.Web.Pages.Energy.CreateModel
+
+@{
+    ViewData["Title"] = "New Energy Audit";
+}
+
+<div class="page-header mb-4">
+    <div>
+        <h4 class="mb-1">Create Energy Audit</h4>
+        <p class="text-muted mb-0">
+            Set up a departmental energy-efficiency audit.
+        </p>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+
+        <div class="alert alert-light border mb-4">
+            <strong>Audit process:</strong>
+            Create the audit first, then add workstation observations
+            using the audit checklist.
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label asp-for="Input.AuditReference"
+                           class="form-label">Audit Reference *</label>
+
+                    <input asp-for="Input.AuditReference"
+                           class="form-control"
+                           readonly />
+
+                    <span asp-validation-for="Input.AuditReference"
+                          class="text-danger small"></span>
+
+                    <small class="text-muted">
+                        Automatically generated audit reference.
+                    </small>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.DepartmentId"
+                           class="form-label">Department *</label>
+
+                    <select asp-for="Input.DepartmentId"
+                            asp-items="Model.Departments"
+                            class="form-select">
+                        <option value="">Select department</option>
+                    </select>
+
+                    <span asp-validation-for="Input.DepartmentId"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.AuditDate"
+                           class="form-label">Audit Date *</label>
+
+                    <input asp-for="Input.AuditDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.AuditDate"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.AuditorUserId"
+                           class="form-label">Auditor / Staff ID</label>
+
+                    <input asp-for="Input.AuditorUserId"
+                           class="form-control"
+                           placeholder="Enter auditor staff ID" />
+
+                    <span asp-validation-for="Input.AuditorUserId"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Notes"
+                           class="form-label">Audit Notes</label>
+
+                    <textarea asp-for="Input.Notes"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Enter any preliminary audit notes..."></textarea>
+
+                    <span asp-validation-for="Input.Notes"
+                          class="text-danger small"></span>
+                </div>
+
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-page="./Index" class="btn btn-light">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-success">
+                    Create Energy Audit
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

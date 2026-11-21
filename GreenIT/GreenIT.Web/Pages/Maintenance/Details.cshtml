@@ -1,0 +1,131 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Maintenance.DetailsModel
+
+@{
+    ViewData["Title"] = "Maintenance Details";
+    var record = Model.Record;
+}
+
+<div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="mb-1">Maintenance Details</h4>
+        <p class="text-muted mb-0">
+            View the recorded maintenance activity.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-page="./Edit" asp-route-id="@record.Id"
+           class="btn btn-success">
+            Edit Record
+        </a>
+
+        <a asp-page="./Index" class="btn btn-light">
+            Back to Register
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h6 class="mb-3">Asset Information</h6>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Asset Tag</dt>
+                    <dd class="col-sm-7">@record.ITAsset.AssetTag</dd>
+
+                    <dt class="col-sm-5">Asset Name</dt>
+                    <dd class="col-sm-7">@record.ITAsset.Name</dd>
+
+                    <dt class="col-sm-5">Category</dt>
+                    <dd class="col-sm-7">@record.ITAsset.Category</dd>
+
+                    <dt class="col-sm-5">Department</dt>
+                    <dd class="col-sm-7">
+                        @(record.ITAsset.Department?.Name ?? "Not assigned")
+                    </dd>
+
+                    <dt class="col-sm-5">Asset Status</dt>
+                    <dd class="col-sm-7">@record.ITAsset.Status</dd>
+                </dl>
+
+                <hr />
+
+                <a asp-page="/Assets/Details"
+                   asp-route-id="@record.ITAssetId"
+                   class="btn btn-outline-success btn-sm">
+                    View Asset Details
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <h6 class="mb-3">Maintenance Information</h6>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Maintenance Type</dt>
+                    <dd class="col-sm-7">@record.MaintenanceType</dd>
+
+                    <dt class="col-sm-5">Maintenance Date</dt>
+                    <dd class="col-sm-7">
+                        @record.MaintenanceDate.ToString("dd MMM yyyy")
+                    </dd>
+
+                    <dt class="col-sm-5">Next Maintenance</dt>
+                    <dd class="col-sm-7">
+                        @(record.NextMaintenanceDate?.ToString("dd MMM yyyy") ?? "Not scheduled")
+                    </dd>
+
+                    <dt class="col-sm-5">Maintenance Cost</dt>
+                    <dd class="col-sm-7">
+                        @(record.MaintenanceCost.HasValue
+                            ? record.MaintenanceCost.Value.ToString("N2")
+                            : "Not recorded")
+                    </dd>
+
+                    <dt class="col-sm-5">Service Provider</dt>
+                    <dd class="col-sm-7">
+                        @(record.ServiceProvider ?? "Not specified")
+                    </dd>
+
+                    <dt class="col-sm-5">Performed By</dt>
+                    <dd class="col-sm-7">
+                        @(record.PerformedBy ?? "Not specified")
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <h6 class="mb-3">Maintenance Description</h6>
+                <p class="mb-0">@record.Description</p>
+
+                <hr />
+
+                <h6 class="mb-2">Additional Notes</h6>
+                <p class="text-muted mb-0">
+                    @(string.IsNullOrWhiteSpace(record.Notes)
+                        ? "No additional notes recorded."
+                        : record.Notes)
+                </p>
+
+                <hr />
+
+                <small class="text-muted">
+                    Record created:
+                    @record.CreatedAtUtc.ToString("dd MMM yyyy HH:mm") UTC
+                </small>
+            </div>
+        </div>
+    </div>
+
+</div>

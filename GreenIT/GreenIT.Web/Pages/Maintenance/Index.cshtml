@@ -1,0 +1,183 @@
+﻿@page
+@model GreenIT.Web.Pages.Maintenance.IndexModel
+
+@{
+    ViewData["Title"] = "Asset Maintenance";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-1">Asset Maintenance</h3>
+        <p class="text-muted mb-0">
+            Track servicing, repairs and scheduled maintenance.
+        </p>
+    </div>
+
+    <a asp-page="./Create" class="btn btn-success">
+        <i class="bi bi-plus-circle me-1"></i>
+        Record Maintenance
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null) {
+    <div class="alert alert-success alert-dismissible fade show">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <small class="text-muted">Maintenance Records</small>
+                <h3 class="mb-0">@Model.TotalRecords</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <small class="text-muted">Total Maintenance Cost</small>
+                <h3 class="mb-0">
+                    @Model.TotalMaintenanceCost.ToString("N2")
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body">
+                <small class="text-muted">Upcoming Maintenance</small>
+                <h3 class="mb-0">@Model.UpcomingMaintenanceCount</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form method="get" class="row g-2 mb-3">
+            <div class="col-md-5">
+                <input asp-for="SearchTerm"
+                       class="form-control"
+                       placeholder="Search asset, type or provider..." />
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-success">
+                    <i class="bi bi-search me-1"></i> Search
+                </button>
+            </div>
+
+            <div class="col-auto">
+                <a asp-page="./Index" class="btn btn-light">
+                    Reset
+                </a>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Asset</th>
+                        <th>Maintenance Type</th>
+                        <th>Description</th>
+                        <th>Maintenance Date</th>
+                        <th>Next Maintenance</th>
+                        <th>Cost</th>
+                        <th>Provider</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.MaintenanceRecords.Any()) {
+                        @foreach (var record in Model.MaintenanceRecords) {
+                            <tr>
+                                <td>
+                                    <strong>@record.AssetTag</strong>
+                                    <small class="d-block text-muted">
+                                        @record.AssetName
+                                    </small>
+                                </td>
+                                <td>@record.MaintenanceType</td>
+                                <td>@record.Description</td>
+                                <td>
+                                    @record.MaintenanceDate.ToString("dd MMM yyyy")
+                                </td>
+                                <td>
+                                    @(record.NextMaintenanceDate?.ToString("dd MMM yyyy") ?? "—")
+                                </td>
+                                <td>
+                                    @(record.MaintenanceCost?.ToString("N2") ?? "—")
+                                </td>
+                                <td>@(record.ServiceProvider ?? "—")</td>
+                                <td>
+                                    <a asp-page="./Details"
+                                       asp-route-id="@record.Id"
+                                       class="btn btn-sm btn-outline-success">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    } else {
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No maintenance records found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1) {
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <small class="text-muted">
+                    Showing @(((Model.PageNumber - 1) * Model.PageSize) + 1)
+                    to @(Math.Min(Model.PageNumber * Model.PageSize, Model.TotalRecords))
+                    of @Model.TotalRecords records
+                </small>
+
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+                            <a class="page-link"
+                               asp-page="./Index"
+                               asp-route-PageNumber="@(Model.PageNumber - 1)"
+                               asp-route-SearchTerm="@Model.SearchTerm">
+                                Previous
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Model.TotalPages; i++) {
+                            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                <a class="page-link"
+                                   asp-page="./Index"
+                                   asp-route-PageNumber="@i"
+                                   asp-route-SearchTerm="@Model.SearchTerm">
+                                    @i
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link"
+                               asp-page="./Index"
+                               asp-route-PageNumber="@(Model.PageNumber + 1)"
+                               asp-route-SearchTerm="@Model.SearchTerm">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+</div>

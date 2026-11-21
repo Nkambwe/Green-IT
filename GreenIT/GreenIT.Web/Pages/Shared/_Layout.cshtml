@@ -1,11 +1,12 @@
 ﻿@{
     var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
 
-    var isDashboard = currentPage.Equals(
-        "/Index", StringComparison.OrdinalIgnoreCase);
+    bool IsMenuActive(string pagePrefix) {
+        return currentPage.StartsWith(pagePrefix,StringComparison.OrdinalIgnoreCase);
+    }
+}
 
-    var isAssets = currentPage.StartsWith(
-        "/Assets", StringComparison.OrdinalIgnoreCase);
+var isAssets = currentPage.StartsWith("/Assets", StringComparison.OrdinalIgnoreCase);
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="~/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="~/favicon-16.png" />
     <link rel="shortcut icon" href="~/favicon.ico" />
-    <link rel="stylesheet"href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -42,64 +44,64 @@
                 <div class="sidebar-section">
                     <span class="sidebar-label">MAIN MENU</span>
 
-                    <a asp-page="/Index" class="sidebar-link @(isDashboard ? "active" : "")"
-                       title="Dashboard">
+                    <a asp-page="/Index" class="sidebar-link @(IsMenuActive("/Index") ? "active" : "")" title="Dashboard>
                         <span class="menu-icon">▦</span>
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </div>
 
                 <div class="sidebar-section">
+
                     <span class="sidebar-label">MANAGEMENT</span>
 
-                    <a asp-page="/Assets/Index" class="sidebar-link @(isAssets ? "active" : "")" title="IT Assets">
+                    <a asp-page="/Assets/Index" class="sidebar-link @(IsMenuActive("/Assets") ? "active" : "")" title="IT Assets">
                         <span class="menu-icon">▤</span>
                         <span class="menu-text">IT Assets</span>
                     </a>
 
-                    <a asp-page="/Assignments/Index" class="sidebar-link" title="Asset Assignments">
+                    <a asp-page="/Assignments/Index" class="sidebar-link @(IsMenuActive("/Assignments") ? "active" : "")" title="Asset Assignments">
                         <span class="menu-icon">⇄</span>
                         <span class="menu-text">Asset Assignments</span>
                     </a>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="Energy Monitoring" title="Energy Monitoring">
+                    <a asp-page="/Maintenance/Index" class="sidebar-link @(IsMenuActive("/Maintenance") ? "active" : "")" title="Asset Maintenance">
+                        <span class="menu-icon">🔧</span>
+                        <span class="menu-text">Asset Maintenance</span>
+                    </a>
+
+                    <a asp-page="/Monitoring/Index" class="sidebar-link @(IsMenuActive("/Monitoring") ? "active" : "")" title="Energy Monitoring">
                         <span class="menu-icon">ϟ</span>
                         <span class="menu-text">Energy Monitoring</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+                    </a>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="Paper and Printing" title="Paper and Printing">
+                    <a asp-page="/Printing/Index" class="sidebar-link @(IsMenuActive("/Printing") ? "active" : "")" title="Paper and Printing">
                         <span class="menu-icon">▤</span>
                         <span class="menu-text">Paper & Printing</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+                    </a>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="Sustainability Actions" title="Sustainability Actions">
+                    <a asp-page="/Sustainability/Index" class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")" title="Sustainability Actions">
                         <span class="menu-icon">❧</span>
                         <span class="menu-text">Sustainability Actions</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+                    </a>
+
                 </div>
 
                 <div class="sidebar-section">
+
                     <span class="sidebar-label">SYSTEM</span>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="Reports" title="Reports">
+                    <a asp-page="/Sustainability/Index" class="sidebar-link @(IsMenuActive("/Sustainability") ? "active" : "")"
+                        title="Sustainability Actions">
                         <span class="menu-icon">▧</span>
                         <span class="menu-text">Reports</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+                    </a>
 
-                    <button type="button" class="sidebar-link module-link"
-                            data-module="Administration" title="Administration">
+                    <a asp-page="/Administration/Index" class="sidebar-link @(IsMenuActive("/Administration") ? "active" : "")"
+                       title="Sustainability Actions">
                         <span class="menu-icon">⚙</span>
                         <span class="menu-text">Administration</span>
-                        <span class="menu-soon">Soon</span>
-                    </button>
+                    </a>
+
                 </div>
             </nav>
 

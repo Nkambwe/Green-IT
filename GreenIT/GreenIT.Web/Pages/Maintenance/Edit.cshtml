@@ -1,0 +1,160 @@
+﻿@page "{id:int}"
+@model GreenIT.Web.Pages.Maintenance.EditModel
+
+@{
+    ViewData["Title"] = "Edit Maintenance Record";
+}
+
+<div class="page-header mb-4">
+    <div>
+        <h4 class="mb-1">Edit Maintenance Record</h4>
+        <p class="text-muted mb-0">
+            Update the maintenance information for this asset.
+        </p>
+    </div>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+
+        <div class="alert alert-light border mb-4">
+            <strong>Asset:</strong> @Model.AssetTag -
+            @Model.AssetName
+            <div class="small text-muted">
+                The original asset association cannot be changed here.
+            </div>
+        </div>
+
+        <form method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceType"
+                           class="form-label">Maintenance Type *</label>
+
+                    <select asp-for="Input.MaintenanceType"
+                            class="form-select">
+                        <option value="">Select maintenance type</option>
+                        <option>Preventive</option>
+                        <option>Corrective</option>
+                        <option>Repair</option>
+                        <option>Inspection</option>
+                        <option>Upgrade</option>
+                        <option>Other</option>
+                    </select>
+
+                    <span asp-validation-for="Input.MaintenanceType"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Description"
+                           class="form-label">Description *</label>
+
+                    <textarea asp-for="Input.Description"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                    <span asp-validation-for="Input.Description"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceDate"
+                           class="form-label">Maintenance Date *</label>
+
+                    <input asp-for="Input.MaintenanceDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.MaintenanceDate"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.NextMaintenanceDate"
+                           class="form-label">Next Maintenance Date</label>
+
+                    <input asp-for="Input.NextMaintenanceDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.NextMaintenanceDate"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceCost"
+                           class="form-label">Maintenance Cost</label>
+
+                    <input asp-for="Input.MaintenanceCost"
+                           type="number"
+                           step="0.01"
+                           min="0"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.MaintenanceCost"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.ServiceProvider"
+                           class="form-label">Service Provider</label>
+
+                    <input asp-for="Input.ServiceProvider"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.ServiceProvider"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.PerformedBy"
+                           class="form-label">Performed By</label>
+
+                    <input asp-for="Input.PerformedBy"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.PerformedBy"
+                          class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Notes"
+                           class="form-label">Additional Notes</label>
+
+                    <textarea asp-for="Input.Notes"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                    <span asp-validation-for="Input.Notes"
+                          class="text-danger small"></span>
+                </div>
+
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-page="./Details"
+                   asp-route-id="@Model.RecordId"
+                   class="btn btn-light">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-success">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

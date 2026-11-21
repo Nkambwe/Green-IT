@@ -344,4 +344,5 @@ C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\GreenIT.Web.genr
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\ref\GreenIT.Web.dll
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\wppixrqe3t-{0}-i65lcw0a9d-i65lcw0a9d.gz
 C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\j91ujppncl-{0}-hhilavdapn-hhilavdapn.gz
-C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-0wbqyyo48v-0wbqyyo48v.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\obj\Debug\net10.0\compressed\8dx030l6ub-{0}-v53w8u8nm9-v53w8u8nm9.gz
+C:\Projects\Labs\Green-IT\GreenIT\GreenIT.Web\bin\Debug\net10.0\BootstrapIcons.AspNetCore.dll

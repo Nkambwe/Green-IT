@@ -1,0 +1,170 @@
+﻿@page
+@model GreenIT.Web.Pages.Maintenance.CreateModel
+
+@{
+    ViewData["Title"] = "Record Maintenance";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h3 class="mb-1">Record Maintenance</h3>
+        <p class="text-muted mb-0">
+            Capture servicing, repairs and maintenance activities.
+        </p>
+    </div>
+
+    <a asp-page="./Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>
+        Back to Maintenance
+    </a>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h6 class="mb-0">Maintenance Information</h6>
+    </div>
+
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Input.ITAssetId" class="form-label">
+                        IT Asset
+                    </label>
+
+                    <select asp-for="Input.ITAssetId"
+                            asp-items="Model.Assets"
+                            class="form-select">
+                        <option value="">-- Select Asset --</option>
+                    </select>
+
+                    <span asp-validation-for="Input.ITAssetId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceType"
+                           class="form-label">
+                        Maintenance Type
+                    </label>
+
+                    <input asp-for="Input.MaintenanceType"
+                           class="form-control"
+                           placeholder="e.g. Repair, Servicing, Inspection" />
+
+                    <span asp-validation-for="Input.MaintenanceType"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Description" class="form-label">
+                        Description of Work
+                    </label>
+
+                    <textarea asp-for="Input.Description"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Describe the maintenance work performed..."></textarea>
+
+                    <span asp-validation-for="Input.Description"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceDate"
+                           class="form-label">
+                        Maintenance Date
+                    </label>
+
+                    <input asp-for="Input.MaintenanceDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.MaintenanceDate"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.NextMaintenanceDate"
+                           class="form-label">
+                        Next Maintenance Date
+                    </label>
+
+                    <input asp-for="Input.NextMaintenanceDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="Input.NextMaintenanceDate"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.MaintenanceCost"
+                           class="form-label">
+                        Maintenance Cost
+                    </label>
+
+                    <input asp-for="Input.MaintenanceCost"
+                           type="number"
+                           min="0"
+                           step="0.01"
+                           class="form-control"
+                           placeholder="0.00" />
+
+                    <span asp-validation-for="Input.MaintenanceCost"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.ServiceProvider"
+                           class="form-label">
+                        Service Provider
+                    </label>
+
+                    <input asp-for="Input.ServiceProvider"
+                           class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Input.PerformedBy"
+                           class="form-label">
+                        Performed By
+                    </label>
+
+                    <input asp-for="Input.PerformedBy"
+                           class="form-control" />
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Input.Notes" class="form-label">
+                        Additional Notes
+                    </label>
+
+                    <textarea asp-for="Input.Notes"
+                              class="form-control"
+                              rows="3"></textarea>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-page="./Index" class="btn btn-light">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save me-1"></i>
+                    Save Maintenance Record
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
